@@ -1,0 +1,123 @@
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { FaSearch, FaBook, FaFolderOpen, FaChartLine, FaCog, FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
+import SearchPage from './pages/SearchPage';
+import LibraryPage from './pages/LibraryPage';
+import CollectionsPage from './pages/CollectionsPage';
+import VisualizationsPage from './pages/VisualizationsPage';
+import SettingsPage from './pages/SettingsPage';
+import { statsAPI, authAPI } from './services/api';
+import './App.css';
+
+function App() {
+  const [stats, setStats] = useState(null);
+  const [authStatus, setAuthStatus] = useState(null);
+
+  useEffect(() => {
+    loadStats();
+    loadAuthStatus();
+  }, []);
+
+  const loadStats = async () => {
+    try {
+      const response = await statsAPI.get();
+      setStats(response.data);
+    } catch (error) {
+      console.error('Failed to load stats:', error);
+    }
+  };
+
+  const loadAuthStatus = async () => {
+    try {
+      const response = await authAPI.getStatus();
+      setAuthStatus(response.data);
+    } catch (error) {
+      console.error('Failed to load auth status:', error);
+    }
+  };
+
+  return (
+    <Router>
+      <div className="app">
+        <nav className="sidebar">
+          <div className="logo">
+            <h1>📚 LitSearch</h1>
+          </div>
+
+          <div className="nav-links">
+            <Link to="/" className="nav-link">
+              <FaSearch /> Search
+            </Link>
+            <Link to="/library" className="nav-link">
+              <FaBook /> Library
+              {stats && <span className="badge">{stats.total_papers}</span>}
+            </Link>
+            <Link to="/collections" className="nav-link">
+              <FaFolderOpen /> Collections
+              {stats && <span className="badge">{stats.collections_count}</span>}
+            </Link>
+            <Link to="/visualizations" className="nav-link">
+              <FaChartLine /> Visualizations
+            </Link>
+            <Link to="/settings" className="nav-link">
+              <FaCog /> Settings
+            </Link>
+          </div>
+
+          <div className="sidebar-footer">
+            {authStatus && (
+              <div className={`ucsb-status ${authStatus.authenticated ? 'authenticated' : 'not-authenticated'}`}>
+                {authStatus.authenticated ? (
+                  <>
+                    <FaCheckCircle className="status-icon" />
+                    <div className="status-text">
+                      <span className="status-title">UCSB Access</span>
+                      <span className="status-subtitle">Enabled</span>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <FaTimesCircle className="status-icon" />
+                    <div className="status-text">
+                      <span className="status-title">UCSB Access</span>
+                      <span className="status-subtitle">Not configured</span>
+                    </div>
+                  </>
+                )}
+              </div>
+            )}
+
+            {stats && (
+              <div className="sidebar-stats">
+                <div className="stat-item">
+                  <span className="stat-label">Papers:</span>
+                  <span className="stat-value">{stats.total_papers}</span>
+                </div>
+                <div className="stat-item">
+                  <span className="stat-label">PDFs:</span>
+                  <span className="stat-value">{stats.total_pdfs}</span>
+                </div>
+                <div className="stat-item">
+                  <span className="stat-label">Searches:</span>
+                  <span className="stat-value">{stats.total_searches}</span>
+                </div>
+              </div>
+            )}
+          </div>
+        </nav>
+
+        <main className="main-content">
+          <Routes>
+            <Route path="/" element={<SearchPage onStatsUpdate={loadStats} />} />
+            <Route path="/library" element={<LibraryPage />} />
+            <Route path="/collections" element={<CollectionsPage />} />
+            <Route path="/visualizations" element={<VisualizationsPage />} />
+            <Route path="/settings" element={<SettingsPage />} />
+          </Routes>
+        </main>
+      </div>
+    </Router>
+  );
+}
+
+export default App;

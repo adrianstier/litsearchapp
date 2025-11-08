@@ -1,0 +1,1 @@
+"""Backend API for Literature Search Application"""

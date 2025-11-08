@@ -1,0 +1,253 @@
+/* PaperCard.css - Enhanced Features */
+
+/* Paper Title Row with Quick Actions */
+.paper-title-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.paper-quick-actions {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.quick-action-toggle {
+  background: var(--bg-tertiary);
+  border: 2px solid var(--border-primary);
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  color: var(--text-secondary);
+}
+
+.quick-action-toggle:hover {
+  background: var(--bg-hover);
+  border-color: var(--primary);
+  color: var(--primary);
+  transform: scale(1.05);
+}
+
+.quick-actions-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 0.5rem;
+  background: var(--card-bg);
+  border: 2px solid var(--border-primary);
+  border-radius: 0.75rem;
+  box-shadow: var(--shadow-xl);
+  z-index: 10;
+  min-width: 200px;
+  overflow: hidden;
+  animation: menu-slide-in 0.2s ease;
+}
+
+@keyframes menu-slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.quick-action-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.875rem 1.25rem;
+  border: none;
+  background: none;
+  color: var(--text-primary);
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  font-weight: 500;
+  font-size: 0.9375rem;
+  transition: all 0.2s ease;
+  border-bottom: 1px solid var(--border-primary);
+}
+
+.quick-action-item:last-child {
+  border-bottom: none;
+}
+
+.quick-action-item:hover {
+  background: var(--bg-secondary);
+  color: var(--primary);
+}
+
+.quick-action-item svg {
+  font-size: 1rem;
+}
+
+/* Enhanced Abstract with Toggle */
+.abstract-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: none;
+  border: none;
+  color: var(--primary);
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.875rem;
+  margin-top: 0.75rem;
+  padding: 0.5rem 0;
+  transition: all 0.2s ease;
+}
+
+.abstract-toggle:hover {
+  color: var(--primary-dark);
+  transform: translateX(4px);
+}
+
+.abstract-toggle svg {
+  font-size: 0.75rem;
+}
+
+/* Enhanced DOI with Copy Button */
+.paper-doi {
+  font-size: 0.8125rem;
+  color: var(--gray-500);
+  margin: 0.75rem 0;
+  word-break: break-all;
+  padding: 0.75rem 1rem;
+  background: var(--gray-50);
+  border-radius: 0.5rem;
+  font-family: 'Monaco', 'Courier New', monospace;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.doi-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.doi-copy-btn {
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 0.375rem;
+  padding: 0.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.doi-copy-btn:hover {
+  background: var(--primary-dark);
+  transform: scale(1.1);
+}
+
+.doi-copy-btn svg {
+  font-size: 0.875rem;
+}
+
+/* Download Status Messages */
+.download-status {
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  margin: 1rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.download-status.success {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(16, 185, 129, 0.08) 100%);
+  color: var(--success);
+  border: 2px solid var(--success);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+}
+
+.download-status.error {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.15) 0%, rgba(239, 68, 68, 0.08) 100%);
+  color: var(--danger);
+  border: 2px solid var(--danger);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+}
+
+.download-status svg {
+  font-size: 1.125rem;
+}
+
+/* Enhanced Download Button */
+.btn-download.downloading {
+  background: linear-gradient(135deg, var(--gray-400) 0%, var(--gray-500) 100%);
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.btn-download.ucsb-enabled {
+  background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.btn-download.ucsb-enabled:hover {
+  box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
+}
+
+.btn-download .spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* UCSB Access Notice */
+.ucsb-access-notice {
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(16, 185, 129, 0.05) 100%);
+  border-left: 4px solid var(--success);
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--gray-700);
+  font-weight: 500;
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

@@ -1,0 +1,237 @@
+{
+  "query": {
+    "query": "neural networks",
+    "sources": [
+      "arxiv"
+    ],
+    "year_start": null,
+    "year_end": null,
+    "max_results": 5,
+    "paper_types": null,
+    "authors": null,
+    "journals": null,
+    "sort_by": "relevance",
+    "include_abstracts": true
+  },
+  "statistics": {
+    "total_papers": 5,
+    "total_found": 5,
+    "sources_searched": 1,
+    "papers_by_source": {
+      "arxiv": 5
+    },
+    "papers_by_year": {
+      "2025": 1,
+      "2019": 1,
+      "2005": 1,
+      "2023": 2
+    },
+    "papers_by_type": {
+      "preprint": 5
+    },
+    "avg_citations": 0.0,
+    "search_time": 4.20880913734436
+  },
+  "papers": [
+    {
+      "title": "A Survey of Recursive and Recurrent Neural Networks",
+      "doi": null,
+      "pmid": null,
+      "pmcid": null,
+      "arxiv_id": "2510.17867v1",
+      "authors": [
+        {
+          "name": "Jian-wei Liu",
+          "first_name": null,
+          "last_name": null,
+          "affiliation": null,
+          "orcid": null
+        },
+        {
+          "name": "Bing-rong Xu",
+          "first_name": null,
+          "last_name": null,
+          "affiliation": null,
+          "orcid": null
+        },
+        {
+          "name": "Zhi-yan Song",
+          "first_name": null,
+          "last_name": null,
+          "affiliation": null,
+          "orcid": null
+        }
+      ],
+      "year": 2025,
+      "journal": "arXiv",
+      "volume": null,
+      "issue": null,
+      "pages": null,
+      "abstract": "In this paper, the branches of recursive and recurrent neural networks are\nclassified in detail according to the network structure, training objective\nfunction and learning algorithm implementation. They are roughly divided into\nthree categories: The first category is General Recursive and Recurrent Neural\nNetworks, including Basic Recursive and Recurrent Neural Networks, Long Short\nTerm Memory Recursive and Recurrent Neural Networks, Convolutional Recursive\nand Recurrent Neural Networks, Differential Recursive and Recurrent Neural\nNetworks, One-Layer Recursive and Recurrent Neural Networks, High-Order\nRecursive and Recurrent Neural Networks, Highway Networks, Multidimensional\nRecursive and Recurrent Neural Networks, Bidirectional Recursive and Recurrent\nNeural Networks; the second category is Structured Recursive and Recurrent\nNeural Networks, including Grid Recursive and Recurrent Neural Networks, Graph\nRecursive and Recurrent Neural Networks, Temporal Recursive and Recurrent\nNeural Networks, Lattice Recursive and Recurrent Neural Networks, Hierarchical\nRecursive and Recurrent Neural Networks, Tree Recursive and Recurrent Neural\nNetworks; the third category is Other Recursive and Recurrent Neural Networks,\nincluding Array Long Short Term Memory, Nested and Stacked Recursive and\nRecurrent Neural Networks, Memory Recursive and Recurrent Neural Networks.\nVarious networks cross each other and even rely on each other to form a complex\nnetwork of relationships. In the context of the development and convergence of\nvarious networks, many complex sequence, speech and image problems are solved.\nAfter a detailed description of the principle and structure of the above model\nand model deformation, the research progress and application of each model are\ndescribed, and finally the recursive and recurrent neural network models are\nprospected and summarized.",
+      "keywords": [],
+      "citations": 0,
+      "altmetric_score": null,
+      "relevance_score": 80.0,
+      "url": "http://arxiv.org/abs/2510.17867v1",
+      "pdf_url": "http://arxiv.org/pdf/2510.17867v1",
+      "paper_type": "preprint",
+      "sources": [
+        "arxiv"
+      ],
+      "retrieved_at": "2025-11-07 06:50:25.442944",
+      "local_pdf_path": null
+    },
+    {
+      "title": "Neural Network Processing Neural Networks: An efficient way to learn higher order functions",
+      "doi": null,
+      "pmid": null,
+      "pmcid": null,
+      "arxiv_id": "1911.05640v2",
+      "authors": [
+        {
+          "name": "Firat Tuna",
+          "first_name": null,
+          "last_name": null,
+          "affiliation": null,
+          "orcid": null
+        }
+      ],
+      "year": 2019,
+      "journal": "arXiv",
+      "volume": null,
+      "issue": null,
+      "pages": null,
+      "abstract": "Functions are rich in meaning and can be interpreted in a variety of ways.\nNeural networks were proven to be capable of approximating a large class of\nfunctions[1]. In this paper, we propose a new class of neural networks called\n\"Neural Network Processing Neural Networks\" (NNPNNs), which inputs neural\nnetworks and numerical values, instead of just numerical values. Thus enabling\nneural networks to represent and process rich structures.",
+      "keywords": [],
+      "citations": 0,
+      "altmetric_score": null,
+      "relevance_score": 70.0,
+      "url": "http://arxiv.org/abs/1911.05640v2",
+      "pdf_url": "http://arxiv.org/pdf/1911.05640v2",
+      "paper_type": "preprint",
+      "sources": [
+        "arxiv"
+      ],
+      "retrieved_at": "2025-11-07 06:50:28.451845",
+      "local_pdf_path": null
+    },
+    {
+      "title": "Self-Organizing Multilayered Neural Networks of Optimal Complexity",
+      "doi": null,
+      "pmid": null,
+      "pmcid": null,
+      "arxiv_id": "cs/0504056v1",
+      "authors": [
+        {
+          "name": "V. Schetinin",
+          "first_name": null,
+          "last_name": null,
+          "affiliation": null,
+          "orcid": null
+        }
+      ],
+      "year": 2005,
+      "journal": "arXiv",
+      "volume": null,
+      "issue": null,
+      "pages": null,
+      "abstract": "The principles of self-organizing the neural networks of optimal complexity\nis considered under the unrepresentative learning set. The method of\nself-organizing the multi-layered neural networks is offered and used to train\nthe logical neural networks which were applied to the medical diagnostics.",
+      "keywords": [],
+      "citations": 0,
+      "altmetric_score": null,
+      "relevance_score": 65.0,
+      "url": "http://arxiv.org/abs/cs/0504056v1",
+      "pdf_url": "http://arxiv.org/pdf/cs/0504056v1",
+      "paper_type": "preprint",
+      "sources": [
+        "arxiv"
+      ],
+      "retrieved_at": "2025-11-07 06:50:27.446992",
+      "local_pdf_path": null
+    },
+    {
+      "title": "Lecture Notes: Neural Network Architectures",
+      "doi": null,
+      "pmid": null,
+      "pmcid": null,
+      "arxiv_id": "2304.05133v2",
+      "authors": [
+        {
+          "name": "Evelyn Herberg",
+          "first_name": null,
+          "last_name": null,
+          "affiliation": null,
+          "orcid": null
+        }
+      ],
+      "year": 2023,
+      "journal": "arXiv",
+      "volume": null,
+      "issue": null,
+      "pages": null,
+      "abstract": "These lecture notes provide an overview of Neural Network architectures from\na mathematical point of view. Especially, Machine Learning with Neural Networks\nis seen as an optimization problem. Covered are an introduction to Neural\nNetworks and the following architectures: Feedforward Neural Network,\nConvolutional Neural Network, ResNet, and Recurrent Neural Network.",
+      "keywords": [],
+      "citations": 0,
+      "altmetric_score": null,
+      "relevance_score": 60.0,
+      "url": "http://arxiv.org/abs/2304.05133v2",
+      "pdf_url": "http://arxiv.org/pdf/2304.05133v2",
+      "paper_type": "preprint",
+      "sources": [
+        "arxiv"
+      ],
+      "retrieved_at": "2025-11-07 06:50:26.446058",
+      "local_pdf_path": null
+    },
+    {
+      "title": "Guaranteed Quantization Error Computation for Neural Network Model Compression",
+      "doi": null,
+      "pmid": null,
+      "pmcid": null,
+      "arxiv_id": "2304.13812v1",
+      "authors": [
+        {
+          "name": "Wesley Cooke",
+          "first_name": null,
+          "last_name": null,
+          "affiliation": null,
+          "orcid": null
+        },
+        {
+          "name": "Zihao Mo",
+          "first_name": null,
+          "last_name": null,
+          "affiliation": null,
+          "orcid": null
+        },
+        {
+          "name": "Weiming Xiang",
+          "first_name": null,
+          "last_name": null,
+          "affiliation": null,
+          "orcid": null
+        }
+      ],
+      "year": 2023,
+      "journal": "arXiv",
+      "volume": null,
+      "issue": null,
+      "pages": null,
+      "abstract": "Neural network model compression techniques can address the computation issue\nof deep neural networks on embedded devices in industrial systems. The\nguaranteed output error computation problem for neural network compression with\nquantization is addressed in this paper. A merged neural network is built from\na feedforward neural network and its quantized version to produce the exact\noutput difference between two neural networks. Then, optimization-based methods\nand reachability analysis methods are applied to the merged neural network to\ncompute the guaranteed quantization error. Finally, a numerical example is\nproposed to validate the applicability and effectiveness of the proposed\napproach.",
+      "keywords": [],
+      "citations": 0,
+      "altmetric_score": null,
+      "relevance_score": 60.0,
+      "url": "http://arxiv.org/abs/2304.13812v1",
+      "pdf_url": "http://arxiv.org/pdf/2304.13812v1",
+      "paper_type": "preprint",
+      "sources": [
+        "arxiv"
+      ],
+      "retrieved_at": "2025-11-07 06:50:29.456452",
+      "local_pdf_path": null
+    }
+  ],
+  "search_time": 4.20880913734436,
+  "errors": {}
+}

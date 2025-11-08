@@ -1,0 +1,814 @@
+{
+  "query": {
+    "query": "coral reef thermal stress",
+    "sources": [
+      "pubmed"
+    ],
+    "year_start": null,
+    "year_end": null,
+    "max_results": 10,
+    "paper_types": null,
+    "authors": null,
+    "journals": null,
+    "sort_by": "relevance",
+    "include_abstracts": true
+  },
+  "statistics": {
+    "total_papers": 10,
+    "total_found": 10,
+    "sources_searched": 1,
+    "papers_by_source": {
+      "pubmed": 10
+    },
+    "papers_by_year": {
+      "2024": 3,
+      "2025": 1,
+      "2023": 1,
+      "2020": 2,
+      "2019": 1,
+      "2022": 1,
+      "2018": 1
+    },
+    "papers_by_type": {
+      "article": 9,
+      "review": 1
+    },
+    "avg_citations": 0.0,
+    "search_time": 1.1707398891448975
+  },
+  "papers": [
+    {
+      "title": "Coral thermal stress and bleaching enrich and restructure reef microbial communities via altered organic matter exudation.",
+      "doi": "10.1101/gr.1239303",
+      "pmid": "38351328",
+      "pmcid": "PMC403769",
+      "arxiv_id": null,
+      "authors": [
+        {
+          "name": "Wesley J Sparagon",
+          "first_name": "Wesley J",
+          "last_name": "Sparagon",
+          "affiliation": "Daniel K. Inouye Center for Microbial Oceanography: Research and Education, Department of Oceanography and Sea Grant College Program, School of Ocean and Earth Science and Technology, University of Hawai'i at M\u0101noa, Honolulu, HI, 96822, USA. sparagon@hawaii.edu.",
+          "orcid": null
+        },
+        {
+          "name": "Milou G I Arts",
+          "first_name": "Milou G I",
+          "last_name": "Arts",
+          "affiliation": "Royal Netherlands Institute for Sea Research, Department of Marine Microbiology and Biogeochemistry, Texel, The Netherlands.",
+          "orcid": null
+        },
+        {
+          "name": "Zachary A Quinlan",
+          "first_name": "Zachary A",
+          "last_name": "Quinlan",
+          "affiliation": "Scripps Institution of Oceanography, University of California San Diego, La Jolla, USA.",
+          "orcid": null
+        },
+        {
+          "name": "Linda Wegley Kelly",
+          "first_name": "Linda",
+          "last_name": "Wegley Kelly",
+          "affiliation": "Scripps Institution of Oceanography, University of California San Diego, La Jolla, USA.",
+          "orcid": null
+        },
+        {
+          "name": "Irina Koester",
+          "first_name": "Irina",
+          "last_name": "Koester",
+          "affiliation": "Scripps Institution of Oceanography, University of California San Diego, La Jolla, USA.",
+          "orcid": null
+        },
+        {
+          "name": "Jacqueline Comstock",
+          "first_name": "Jacqueline",
+          "last_name": "Comstock",
+          "affiliation": "Department of Ecology, Evolution and Marine Biology, The Marine Science Institute, University of California Santa Barbara, Santa Barbara, USA.",
+          "orcid": null
+        },
+        {
+          "name": "Jessica A Bullington",
+          "first_name": "Jessica A",
+          "last_name": "Bullington",
+          "affiliation": "Daniel K. Inouye Center for Microbial Oceanography: Research and Education, Department of Oceanography and Sea Grant College Program, School of Ocean and Earth Science and Technology, University of Hawai'i at M\u0101noa, Honolulu, HI, 96822, USA.",
+          "orcid": null
+        },
+        {
+          "name": "Craig A Carlson",
+          "first_name": "Craig A",
+          "last_name": "Carlson",
+          "affiliation": "Department of Ecology, Evolution and Marine Biology, The Marine Science Institute, University of California Santa Barbara, Santa Barbara, USA.",
+          "orcid": null
+        },
+        {
+          "name": "Pieter C Dorrestein",
+          "first_name": "Pieter C",
+          "last_name": "Dorrestein",
+          "affiliation": "University of California San Diego, San Diego, USA.",
+          "orcid": null
+        },
+        {
+          "name": "Lihini I Aluwihare",
+          "first_name": "Lihini I",
+          "last_name": "Aluwihare",
+          "affiliation": "Scripps Institution of Oceanography, University of California San Diego, La Jolla, USA.",
+          "orcid": null
+        },
+        {
+          "name": "Andreas F Haas",
+          "first_name": "Andreas F",
+          "last_name": "Haas",
+          "affiliation": "Royal Netherlands Institute for Sea Research, Department of Marine Microbiology and Biogeochemistry, Texel, The Netherlands.",
+          "orcid": null
+        },
+        {
+          "name": "Craig E Nelson",
+          "first_name": "Craig E",
+          "last_name": "Nelson",
+          "affiliation": "Daniel K. Inouye Center for Microbial Oceanography: Research and Education, Department of Oceanography and Sea Grant College Program, School of Ocean and Earth Science and Technology, University of Hawai'i at M\u0101noa, Honolulu, HI, 96822, USA.",
+          "orcid": null
+        }
+      ],
+      "year": 2024,
+      "journal": "Communications biology",
+      "volume": "7",
+      "issue": "1",
+      "pages": "160",
+      "abstract": "Coral bleaching is a well-documented and increasingly widespread phenomenon in reefs across the globe, yet there has been relatively little research on the implications for reef water column microbiology and biogeochemistry. A mesocosm heating experiment and bottle incubation compared how unbleached and bleached corals alter dissolved organic matter (DOM) exudation in response to thermal stress and subsequent effects on microbial growth and community structure in the water column. Thermal stress of healthy corals tripled DOM flux relative to ambient corals. DOM exudates from stressed corals (heated and/or previously bleached) were compositionally distinct from healthy corals and significantly increased growth of bacterioplankton, enriching copiotrophs and putative pathogens. Together these results demonstrate how the impacts of both short-term thermal stress and long-term bleaching may extend into the water column, with altered coral DOM exudation driving microbial feedbacks that influence how coral reefs respond to and recover from mass bleaching events.",
+      "keywords": [],
+      "citations": 0,
+      "altmetric_score": null,
+      "relevance_score": 130.0,
+      "url": "https://pubmed.ncbi.nlm.nih.gov/38351328/",
+      "pdf_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC403769/pdf/",
+      "paper_type": "article",
+      "sources": [
+        "pubmed"
+      ],
+      "retrieved_at": "2025-11-07 06:49:47.444412",
+      "local_pdf_path": null
+    },
+    {
+      "title": "Standardized Methods to Assess the Impacts of Thermal Stress on Coral Reef Marine Life.",
+      "doi": "10.1146/annurev-marine-032223-024511",
+      "pmid": "39116436",
+      "pmcid": null,
+      "arxiv_id": null,
+      "authors": [
+        {
+          "name": "Christian R Voolstra",
+          "first_name": "Christian R",
+          "last_name": "Voolstra",
+          "affiliation": "Department of Biology, University of Konstanz, Konstanz, Germany; email: christian.voolstra@uni-konstanz.de.",
+          "orcid": null
+        },
+        {
+          "name": "Rachel Alderdice",
+          "first_name": "Rachel",
+          "last_name": "Alderdice",
+          "affiliation": "Department of Biology, University of Konstanz, Konstanz, Germany; email: christian.voolstra@uni-konstanz.de.",
+          "orcid": null
+        },
+        {
+          "name": "Luigi Colin",
+          "first_name": "Luigi",
+          "last_name": "Colin",
+          "affiliation": "Department of Biology, University of Konstanz, Konstanz, Germany; email: christian.voolstra@uni-konstanz.de.",
+          "orcid": null
+        },
+        {
+          "name": "Sebastian Staab",
+          "first_name": "Sebastian",
+          "last_name": "Staab",
+          "affiliation": "Department of Biology, University of Konstanz, Konstanz, Germany; email: christian.voolstra@uni-konstanz.de.",
+          "orcid": null
+        },
+        {
+          "name": "Amy Apprill",
+          "first_name": "Amy",
+          "last_name": "Apprill",
+          "affiliation": "Department of Marine Chemistry and Geochemistry, Woods Hole Oceanographic Institution, Woods Hole, Massachusetts, USA.",
+          "orcid": null
+        },
+        {
+          "name": "Jean-Baptiste Raina",
+          "first_name": "Jean-Baptiste",
+          "last_name": "Raina",
+          "affiliation": "Climate Change Cluster, University of Technology Sydney, Ultimo, New South Wales, Australia; email: jean-baptiste.raina@uts.edu.au.",
+          "orcid": null
+        }
+      ],
+      "year": 2025,
+      "journal": "Annual review of marine science",
+      "volume": "17",
+      "issue": "1",
+      "pages": "193-226",
+      "abstract": "The Earth's oceans have absorbed more than 90% of the excess, climate change-induced atmospheric heat. The resulting rise in oceanic temperatures affects all species and can lead to the collapse of marine ecosystems, including coral reefs. Here, we review the range of methods used to measure thermal stress impacts on reef-building corals, highlighting current standardization practices and necessary refinements to fast-track discoveries and improve interstudy comparisons. We also present technological developments that will undoubtedly enhance our ability to record and analyze standardized data. Although we use corals as an example, the methods described are widely employed in marine sciences, and our recommendations therefore apply to all species and ecosystems. Enhancing collaborative data collection efforts, implementing field-wide standardized protocols, and ensuring data availability through dedicated, openly accessible databases will enable large-scale analysis and monitoring of ecosystem changes, improving our predictive capacities and informing active intervention to mitigate climate change effects on marine life.",
+      "keywords": [
+        "bleaching",
+        "climate change",
+        "coral reef",
+        "holobiont",
+        "meta-analysis",
+        "meta-organism",
+        "standardization"
+      ],
+      "citations": 0,
+      "altmetric_score": null,
+      "relevance_score": 130.0,
+      "url": "https://pubmed.ncbi.nlm.nih.gov/39116436/",
+      "pdf_url": null,
+      "paper_type": "review",
+      "sources": [
+        "pubmed"
+      ],
+      "retrieved_at": "2025-11-07 06:49:47.444804",
+      "local_pdf_path": null
+    },
+    {
+      "title": "Fine-scale heterogeneity reveals disproportionate thermal stress and coral mortality in thermally variable reef habitats during a marine heatwave.",
+      "doi": "10.1111/gcb.15840",
+      "pmid": "36415309",
+      "pmcid": "PMC9545801",
+      "arxiv_id": null,
+      "authors": [
+        {
+          "name": "Kristen T Brown",
+          "first_name": "Kristen T",
+          "last_name": "Brown",
+          "affiliation": "Department of Biology, University of Pennsylvania, Philadelphia, PA 19104 USA.",
+          "orcid": null
+        },
+        {
+          "name": "Gal Eyal",
+          "first_name": "Gal",
+          "last_name": "Eyal",
+          "affiliation": "School of Biological Sciences and ARC Centre of Excellence for Coral Reef Studies, University of Queensland, St. Lucia, QLD 4072 Australia.",
+          "orcid": null
+        },
+        {
+          "name": "Sophie G Dove",
+          "first_name": "Sophie G",
+          "last_name": "Dove",
+          "affiliation": "School of Biological Sciences and ARC Centre of Excellence for Coral Reef Studies, University of Queensland, St. Lucia, QLD 4072 Australia.",
+          "orcid": null
+        },
+        {
+          "name": "Katie L Barott",
+          "first_name": "Katie L",
+          "last_name": "Barott",
+          "affiliation": "Department of Biology, University of Pennsylvania, Philadelphia, PA 19104 USA.",
+          "orcid": null
+        }
+      ],
+      "year": 2023,
+      "journal": "Coral reefs (Online)",
+      "volume": "42",
+      "issue": "1",
+      "pages": "131-142",
+      "abstract": "UNLABELLED: Increasing ocean temperatures threaten coral reefs globally, but corals residing in habitats that experience high thermal variability are thought to be better adapted to survive climate-induced heat stress. Here, we used long-term ecological observations and in situ temperature data from Heron Island, southern Great Barrier Reef to investigate how temperature dynamics within various thermally variable vs. thermally stable reef habitats change during a marine heatwave and the resulting consequences for coral community survival. During the heatwave, thermally variable habitats experienced larger surges in daily mean and maxima temperatures compared to stable sites, including extreme hourly incursions up to 36.5 \u00b0C. The disproportionate increase in heat stress in variable habitats corresponded with greater subsequent declines in hard coral cover, including a three-times greater decline within the thermally variable Reef Flat (70%) and Deep Lagoon (83%) than within thermally stable habitats along sheltered and exposed areas of the reef slope (0.3-19%). Interestingly, the thermally variable Reef Crest experienced comparatively small declines (26%), avoiding the most severe tidal ponding and resultant heat stress likely due to proximity to the open ocean equating to lower seawater residence times, greater mixing, and/or increased flow. These results highlight that variable thermal regimes, and any acclimatization or adaptation to elevated temperatures that may lead to, do not necessarily equate to protection against bleaching and mortality during marine heatwaves. Instead, thermally stable habitats that have greater seawater exchange with the open ocean may offer the most protection to corals during the severe marine heatwaves that accompany a changing climate. SUPPLEMENTARY INFORMATION: The online version contains supplementary material available at 10.1007/s00338-022-02328-6.",
+      "keywords": [
+        "Climate change",
+        "Coral bleaching",
+        "Coral reefs",
+        "Environmental variability",
+        "Extreme environments",
+        "Thermal stress"
+      ],
+      "citations": 0,
+      "altmetric_score": null,
+      "relevance_score": 130.0,
+      "url": "https://pubmed.ncbi.nlm.nih.gov/36415309/",
+      "pdf_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9545801/pdf/",
+      "paper_type": "article",
+      "sources": [
+        "pubmed"
+      ],
+      "retrieved_at": "2025-11-07 06:49:47.445379",
+      "local_pdf_path": null
+    },
+    {
+      "title": "Coral reef resilience to thermal stress in the Eastern Tropical Pacific.",
+      "doi": "10.1111/gcb.15126",
+      "pmid": "32315464",
+      "pmcid": null,
+      "arxiv_id": null,
+      "authors": [
+        {
+          "name": "Mauricio Romero-Torres",
+          "first_name": "Mauricio",
+          "last_name": "Romero-Torres",
+          "affiliation": "Unidad de Ecolog\u00eda y Sistem\u00e1tica (UNESIS), Departamento de Biolog\u00eda, Pontificia Universidad Javeriana, Bogot\u00e1, Colombia.",
+          "orcid": null
+        },
+        {
+          "name": "Alberto Acosta",
+          "first_name": "Alberto",
+          "last_name": "Acosta",
+          "affiliation": "Unidad de Ecolog\u00eda y Sistem\u00e1tica (UNESIS), Departamento de Biolog\u00eda, Pontificia Universidad Javeriana, Bogot\u00e1, Colombia.",
+          "orcid": null
+        },
+        {
+          "name": "Ana M Palacio-Castro",
+          "first_name": "Ana M",
+          "last_name": "Palacio-Castro",
+          "affiliation": "Rosenstiel School of Marine and Atmospheric Science, University of Miami, Miami, FL, USA.",
+          "orcid": null
+        },
+        {
+          "name": "Eric A Treml",
+          "first_name": "Eric A",
+          "last_name": "Treml",
+          "affiliation": "School of BioSciences, University of Melbourne, Melbourne, Vic., Australia.",
+          "orcid": null
+        },
+        {
+          "name": "Fernando A Zapata",
+          "first_name": "Fernando A",
+          "last_name": "Zapata",
+          "affiliation": "Grupo de Investigaci\u00f3n en Ecolog\u00eda de Arrecifes Coralinos, Departamento de Biolog\u00eda, Universidad del Valle, Cali, Colombia.",
+          "orcid": null
+        },
+        {
+          "name": "David A Paz-Garc\u00eda",
+          "first_name": "David A",
+          "last_name": "Paz-Garc\u00eda",
+          "affiliation": "CONACyT, Centro de Investigaciones Biol\u00f3gicas del Noroeste (CIBNOR), La Paz, BCS, Mexico.",
+          "orcid": null
+        },
+        {
+          "name": "James W Porter",
+          "first_name": "James W",
+          "last_name": "Porter",
+          "affiliation": "Odum School of Ecology, University of Georgia, Athens, GA, USA.",
+          "orcid": null
+        }
+      ],
+      "year": 2020,
+      "journal": "Global change biology",
+      "volume": "26",
+      "issue": "7",
+      "pages": "3880-3890",
+      "abstract": "Coral reefs worldwide are threatened by thermal stress caused by climate change. Especially devastating periods of coral loss frequently occur during El Ni\u00f1o-Southern Oscillation (ENSO) events originating in the Eastern Tropical Pacific (ETP). El Ni\u00f1o-induced thermal stress is considered the primary threat to ETP coral reefs. An increase in the frequency and intensity of ENSO events predicted in the coming decades threatens a pan-tropical collapse of coral reefs. During the 1982-1983 El Ni\u00f1o, most reefs in the Galapagos Islands collapsed, and many more in the region were decimated by massive coral bleaching and mortality. However, after repeated thermal stress disturbances, such as those caused by the 1997-1998 El Ni\u00f1o, ETP corals reefs have demonstrated regional persistence and resiliency. Using a 44 year dataset (1970-2014) of live coral cover from the ETP, we assess whether ETP reefs exhibit the same decline as seen globally for other reefs. Also, we compare the ETP live coral cover rate of change with data from the maximum Degree Heating Weeks experienced by these reefs to assess the role of thermal stress on coral reef survival. We find that during the period 1970-2014, ETP coral cover exhibited temporary reductions following major ENSO events, but no overall decline. Further, we find that ETP reef recovery patterns allow coral to persist under these El Ni\u00f1o-stressed conditions, often recovering from these events in 10-15 years. Accumulative heat stress explains 31% of the overall annual rate of change of living coral cover in the ETP. This suggests that ETP coral reefs have adapted to thermal extremes to date, and may have the ability to adapt to near-term future climate-change thermal anomalies. These findings for ETP reef resilience may provide general insights for the future of coral reef survival and recovery elsewhere under intensifying El Ni\u00f1o scenarios.",
+      "keywords": [
+        "ENSO",
+        "Eastern Tropical Pacific",
+        "climate change",
+        "coral cover",
+        "coral reefs",
+        "degree heating weeks",
+        "ecosystem resilience",
+        "thermal stress"
+      ],
+      "citations": 0,
+      "altmetric_score": null,
+      "relevance_score": 125.0,
+      "url": "https://pubmed.ncbi.nlm.nih.gov/32315464/",
+      "pdf_url": null,
+      "paper_type": "article",
+      "sources": [
+        "pubmed"
+      ],
+      "retrieved_at": "2025-11-07 06:49:47.443585",
+      "local_pdf_path": null
+    },
+    {
+      "title": "Coral cover surveys corroborate predictions on reef adaptive potential to thermal stress.",
+      "doi": "10.3389/fmars.2017.00381",
+      "pmid": "33184366",
+      "pmcid": "PMC5633048",
+      "arxiv_id": null,
+      "authors": [
+        {
+          "name": "Oliver Selmoni",
+          "first_name": "Oliver",
+          "last_name": "Selmoni",
+          "affiliation": "Laboratory of Geographic Information Systems, Ecole Polytechnique Federale de Lausanne, Lausanne, Switzerland.",
+          "orcid": null
+        },
+        {
+          "name": "Ga\u00ebl Lecellier",
+          "first_name": "Ga\u00ebl",
+          "last_name": "Lecellier",
+          "affiliation": "UMR250/9220 ENTROPIE IRD-CNRS-Ifremer-UNC-UR, Labex CORAIL, Noum\u00e9a, New Caledonia, France.",
+          "orcid": null
+        },
+        {
+          "name": "Laurent Vigliola",
+          "first_name": "Laurent",
+          "last_name": "Vigliola",
+          "affiliation": "UMR250/9220 ENTROPIE IRD-CNRS-Ifremer-UNC-UR, Labex CORAIL, Noum\u00e9a, New Caledonia, France.",
+          "orcid": null
+        },
+        {
+          "name": "V\u00e9ronique Berteaux-Lecellier",
+          "first_name": "V\u00e9ronique",
+          "last_name": "Berteaux-Lecellier",
+          "affiliation": "UMR250/9220 ENTROPIE IRD-CNRS-Ifremer-UNC-UR, Labex CORAIL, Noum\u00e9a, New Caledonia, France.",
+          "orcid": null
+        },
+        {
+          "name": "St\u00e9phane Joost",
+          "first_name": "St\u00e9phane",
+          "last_name": "Joost",
+          "affiliation": "Laboratory of Geographic Information Systems, Ecole Polytechnique Federale de Lausanne, Lausanne, Switzerland. stephane.joost@epfl.ch.",
+          "orcid": null
+        }
+      ],
+      "year": 2020,
+      "journal": "Scientific reports",
+      "volume": "10",
+      "issue": "1",
+      "pages": "19680",
+      "abstract": "As anomalous heat waves are causing the widespread decline of coral reefs worldwide, there is an urgent need to identify coral populations tolerant to thermal stress. Heat stress adaptive potential is the degree of tolerance expected from evolutionary processes and, for a given reef, depends on the arrival of propagules from reefs exposed to recurrent thermal stress. For this reason, assessing spatial patterns of thermal adaptation and reef connectivity is of paramount importance to inform conservation strategies. In this work, we applied a seascape genomics framework to characterize the spatial patterns of thermal adaptation and connectivity for coral reefs of New Caledonia (Southern Pacific). In this approach, remote sensing of seascape conditions was combined with genomic data from three coral species. For every reef of the region, we computed a probability of heat stress adaptation, and two indices forecasting inbound and outbound connectivity. We then compared our indicators to field survey data, and observed that decrease of coral cover after heat stress was lower at reefs predicted with high probability of adaptation and inbound connectivity. Last, we discussed how these indicators can be used to inform local conservation strategies and preserve the adaptive potential of New Caledonian reefs.",
+      "keywords": [],
+      "citations": 0,
+      "altmetric_score": null,
+      "relevance_score": 125.0,
+      "url": "https://pubmed.ncbi.nlm.nih.gov/33184366/",
+      "pdf_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5633048/pdf/",
+      "paper_type": "article",
+      "sources": [
+        "pubmed"
+      ],
+      "retrieved_at": "2025-11-07 06:49:47.443779",
+      "local_pdf_path": null
+    },
+    {
+      "title": "Thermal stress induces persistently altered coral reef fish assemblages.",
+      "doi": "10.1111/gcb.14704",
+      "pmid": "31210001",
+      "pmcid": null,
+      "arxiv_id": null,
+      "authors": [
+        {
+          "name": "James P W Robinson",
+          "first_name": "James P W",
+          "last_name": "Robinson",
+          "affiliation": "Lancaster Environment Centre, Lancaster University, Lancaster, UK.",
+          "orcid": null
+        },
+        {
+          "name": "Shaun K Wilson",
+          "first_name": "Shaun K",
+          "last_name": "Wilson",
+          "affiliation": "Marine Science Program, Department of Biodiversity, Conservation and Attractions, Kensington, WA, Australia.",
+          "orcid": null
+        },
+        {
+          "name": "Simon Jennings",
+          "first_name": "Simon",
+          "last_name": "Jennings",
+          "affiliation": "International Council for the Exploration of the Sea, Copenhagen V, Denmark.",
+          "orcid": null
+        },
+        {
+          "name": "Nicholas A J Graham",
+          "first_name": "Nicholas A J",
+          "last_name": "Graham",
+          "affiliation": "Lancaster Environment Centre, Lancaster University, Lancaster, UK.",
+          "orcid": null
+        }
+      ],
+      "year": 2019,
+      "journal": "Global change biology",
+      "volume": "25",
+      "issue": "8",
+      "pages": "2739-2750",
+      "abstract": "Ecological communities are reorganizing in response to warming temperatures. For continuous ocean habitats this reorganization is characterized by large-scale species redistribution, but for tropical discontinuous habitats such as coral reefs, spatial isolation coupled with strong habitat dependence of fish species imply that turnover and local extinctions are more significant mechanisms. In these systems, transient marine heatwaves are causing coral bleaching and profoundly altering habitat structure, yet despite severe bleaching events becoming more frequent and projections indicating annual severe bleaching by the 2050s at most reefs, long-term effects on the diversity and structure of fish assemblages remain unclear. Using a 23-year time series spanning a thermal stress event, we describe and model structural changes and recovery trajectories of fish communities after mass bleaching. Communities changed fundamentally, with the new emergent communities dominated by herbivores and persisting for >15 years, a period exceeding realized and projected intervals between thermal stress events on coral reefs. Reefs which shifted to macroalgal states had the lowest species richness and highest compositional dissimilarity, whereas reefs where live coral recovered exceeded prebleaching fish richness, but remained dissimilar to prebleaching compositions. Given realized and projected frequencies of bleaching events, our results show that fish communities historically associated with coral reefs will not re-establish, requiring substantial adaptation by managers and resource users.",
+      "keywords": [
+        "beta diversity",
+        "biodiversity",
+        "biotic homogenization",
+        "bleaching",
+        "community structure",
+        "coral reef ecology",
+        "regime shifts",
+        "thermal stress"
+      ],
+      "citations": 0,
+      "altmetric_score": null,
+      "relevance_score": 120.0,
+      "url": "https://pubmed.ncbi.nlm.nih.gov/31210001/",
+      "pdf_url": null,
+      "paper_type": "article",
+      "sources": [
+        "pubmed"
+      ],
+      "retrieved_at": "2025-11-07 06:49:47.443928",
+      "local_pdf_path": null
+    },
+    {
+      "title": "Thermal stress triggers productive viral infection of a key coral reef symbiont.",
+      "doi": "10.1111/mec.12861",
+      "pmid": "35046559",
+      "pmcid": "PMC3701053",
+      "arxiv_id": null,
+      "authors": [
+        {
+          "name": "Carsten G B Grupstra",
+          "first_name": "Carsten G B",
+          "last_name": "Grupstra",
+          "affiliation": "BioSciences at Rice, Rice University, Houston, TX, USA. cgb.grupstra@gmail.com.",
+          "orcid": null
+        },
+        {
+          "name": "Lauren I Howe-Kerr",
+          "first_name": "Lauren I",
+          "last_name": "Howe-Kerr",
+          "affiliation": "BioSciences at Rice, Rice University, Houston, TX, USA.",
+          "orcid": null
+        },
+        {
+          "name": "Alex J Veglia",
+          "first_name": "Alex J",
+          "last_name": "Veglia",
+          "affiliation": "BioSciences at Rice, Rice University, Houston, TX, USA.",
+          "orcid": null
+        },
+        {
+          "name": "Reb L Bryant",
+          "first_name": "Reb L",
+          "last_name": "Bryant",
+          "affiliation": "BioSciences at Rice, Rice University, Houston, TX, USA.",
+          "orcid": null
+        },
+        {
+          "name": "Samantha R Coy",
+          "first_name": "Samantha R",
+          "last_name": "Coy",
+          "affiliation": "BioSciences at Rice, Rice University, Houston, TX, USA.",
+          "orcid": null
+        },
+        {
+          "name": "Patricia L Blackwelder",
+          "first_name": "Patricia L",
+          "last_name": "Blackwelder",
+          "affiliation": "Department of Chemistry, University of Miami Center for Advanced Microscopy (UMCAM), 1301 Memorial Dr, Coral Gables, FL, 33146-0630, USA.",
+          "orcid": null
+        },
+        {
+          "name": "Adrienne M S Correa",
+          "first_name": "Adrienne M S",
+          "last_name": "Correa",
+          "affiliation": "BioSciences at Rice, Rice University, Houston, TX, USA.",
+          "orcid": null
+        }
+      ],
+      "year": 2022,
+      "journal": "The ISME journal",
+      "volume": "16",
+      "issue": "5",
+      "pages": "1430-1441",
+      "abstract": "Climate change-driven ocean warming is increasing the frequency and severity of bleaching events, in which corals appear whitened after losing their dinoflagellate endosymbionts (family Symbiodiniaceae). Viral infections of Symbiodiniaceae may contribute to some bleaching signs, but little empirical evidence exists to support this hypothesis. We present the first temporal analysis of a lineage of Symbiodiniaceae-infecting positive-sense single-stranded RNA viruses (\"dinoRNAVs\") in coral colonies, which were exposed to a 5-day heat treatment (+2.1 \u00b0C). A total of 124 dinoRNAV major capsid protein gene \"aminotypes\" (unique amino acid sequences) were detected from five colonies of two closely related Pocillopora-Cladocopium (coral-symbiont) combinations in the experiment; most dinoRNAV aminotypes were shared between the two coral-symbiont combinations (64%) and among multiple colonies (82%). Throughout the experiment, seventeen dinoRNAV aminotypes were found only in heat-treated fragments, and 22 aminotypes were detected at higher relative abundances in heat-treated fragments. DinoRNAVs in fragments of some colonies exhibited higher alpha diversity and dispersion under heat stress. Together, these findings provide the first empirical evidence that exposure to high temperatures triggers some dinoRNAVs to switch from a persistent to a productive infection mode within heat-stressed corals. Over extended time frames, we hypothesize that cumulative dinoRNAV production in the Pocillopora-Cladocopium system could affect colony symbiotic status, for example, by decreasing Symbiodiniaceae densities within corals. This study sets the stage for reef-scale investigations of dinoRNAV dynamics during bleaching events.",
+      "keywords": [],
+      "citations": 0,
+      "altmetric_score": null,
+      "relevance_score": 120.0,
+      "url": "https://pubmed.ncbi.nlm.nih.gov/35046559/",
+      "pdf_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3701053/pdf/",
+      "paper_type": "article",
+      "sources": [
+        "pubmed"
+      ],
+      "retrieved_at": "2025-11-07 06:49:47.444646",
+      "local_pdf_path": null
+    },
+    {
+      "title": "Increasing thermal stress for tropical coral reefs: 1871-2017.",
+      "doi": "10.1023/A:1005466909820",
+      "pmid": "29666437",
+      "pmcid": "PMC5705071",
+      "arxiv_id": null,
+      "authors": [
+        {
+          "name": "J M Lough",
+          "first_name": "J M",
+          "last_name": "Lough",
+          "affiliation": "Australian Institute of Marine Science, PMB3, Townsville MC, QLD, 4810, Australia. j.lough@aims.gov.au.",
+          "orcid": null
+        },
+        {
+          "name": "K D Anderson",
+          "first_name": "K D",
+          "last_name": "Anderson",
+          "affiliation": "Australian Institute of Marine Science, PMB3, Townsville MC, QLD, 4810, Australia.",
+          "orcid": null
+        },
+        {
+          "name": "T P Hughes",
+          "first_name": "T P",
+          "last_name": "Hughes",
+          "affiliation": "ARC Centre of Excellence for Coral Reef Studies, James Cook University, Townsville, QLD 4811, Australia.",
+          "orcid": null
+        }
+      ],
+      "year": 2018,
+      "journal": "Scientific reports",
+      "volume": "8",
+      "issue": "1",
+      "pages": "6079",
+      "abstract": "Tropical corals live close to their upper thermal limit making them vulnerable to unusually warm summer sea temperatures. The resulting thermal stress can lead to breakdown of the coral-algal symbiosis, essential for the functioning of reefs, and cause coral bleaching. Mass coral bleaching is a modern phenomenon associated with increases in reef temperatures due to recent global warming. Widespread bleaching has typically occurred during El Ni\u00f1o events. We examine the historical level of stress for 100 coral reef locations with robust bleaching histories. The level of thermal stress (based on a degree heating month index, DHMI) at these locations during the 2015-2016 El Ni\u00f1o was unprecedented over the period 1871-2017 and exceeded that of the strong 1997-1998 El Ni\u00f1o. The DHMI was also 5 times the level of thermal stress associated with the 'pre-industrial', 1877-1878, El Ni\u00f1o. Coral reefs have, therefore, already shown their vulnerability to the modest (~0.92 \u00b0C) global warming that has occurred to date. Estimates of future levels of thermal stress suggest that even the optimistic 1.5 \u00b0C Paris Agreement target is insufficient to prevent more frequent mass bleaching events for the world's reefs. Effectively, reefs of the future will not be the same as those of the past.",
+      "keywords": [],
+      "citations": 0,
+      "altmetric_score": null,
+      "relevance_score": 120.0,
+      "url": "https://pubmed.ncbi.nlm.nih.gov/29666437/",
+      "pdf_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5705071/pdf/",
+      "paper_type": "article",
+      "sources": [
+        "pubmed"
+      ],
+      "retrieved_at": "2025-11-07 06:49:47.444945",
+      "local_pdf_path": null
+    },
+    {
+      "title": "Alleviating Coral Thermal Stress via Inoculation with Quorum Quenching Bacteria.",
+      "doi": "10.1029/2022JC019307",
+      "pmid": "39030411",
+      "pmcid": null,
+      "arxiv_id": null,
+      "authors": [
+        {
+          "name": "Qingsong Yang",
+          "first_name": "Qingsong",
+          "last_name": "Yang",
+          "affiliation": "CAS Key Laboratory of Tropical Marine Bio-Resources and Ecology, Guangdong Provincial Key Laboratory of Applied Marine Biology, South China, Sea Institute of Oceanology , Chinese Academy of Sciences, Guangzhou, 510301, China.",
+          "orcid": null
+        },
+        {
+          "name": "Bing Yang",
+          "first_name": "Bing",
+          "last_name": "Yang",
+          "affiliation": "CAS Key Laboratory of Tropical Marine Bio-Resources and Ecology, Guangdong Provincial Key Laboratory of Applied Marine Biology, South China, Sea Institute of Oceanology , Chinese Academy of Sciences, Guangzhou, 510301, China.",
+          "orcid": null
+        },
+        {
+          "name": "Bin Yang",
+          "first_name": "Bin",
+          "last_name": "Yang",
+          "affiliation": "CAS Key Laboratory of Tropical Marine Bio-Resources and Ecology, Guangdong Provincial Key Laboratory of Applied Marine Biology, South China, Sea Institute of Oceanology , Chinese Academy of Sciences, Guangzhou, 510301, China.",
+          "orcid": null
+        },
+        {
+          "name": "Wenqian Zhang",
+          "first_name": "Wenqian",
+          "last_name": "Zhang",
+          "affiliation": "CAS Key Laboratory of Tropical Marine Bio-Resources and Ecology, Guangdong Provincial Key Laboratory of Applied Marine Biology, South China, Sea Institute of Oceanology , Chinese Academy of Sciences, Guangzhou, 510301, China.",
+          "orcid": null
+        },
+        {
+          "name": "Xiaoyu Tang",
+          "first_name": "Xiaoyu",
+          "last_name": "Tang",
+          "affiliation": "CAS Key Laboratory of Tropical Marine Bio-Resources and Ecology, Guangdong Provincial Key Laboratory of Applied Marine Biology, South China, Sea Institute of Oceanology , Chinese Academy of Sciences, Guangzhou, 510301, China.",
+          "orcid": null
+        },
+        {
+          "name": "Huiming Sun",
+          "first_name": "Huiming",
+          "last_name": "Sun",
+          "affiliation": "CAS Key Laboratory of Tropical Marine Bio-Resources and Ecology, Guangdong Provincial Key Laboratory of Applied Marine Biology, South China, Sea Institute of Oceanology , Chinese Academy of Sciences, Guangzhou, 510301, China.",
+          "orcid": null
+        },
+        {
+          "name": "Yanying Zhang",
+          "first_name": "Yanying",
+          "last_name": "Zhang",
+          "affiliation": "University of Chinese Academy of Sciences, Beijing, China.",
+          "orcid": null
+        },
+        {
+          "name": "Jie Li",
+          "first_name": "Jie",
+          "last_name": "Li",
+          "affiliation": "CAS Key Laboratory of Tropical Marine Bio-Resources and Ecology, Guangdong Provincial Key Laboratory of Applied Marine Biology, South China, Sea Institute of Oceanology , Chinese Academy of Sciences, Guangzhou, 510301, China.",
+          "orcid": null
+        },
+        {
+          "name": "Juan Ling",
+          "first_name": "Juan",
+          "last_name": "Ling",
+          "affiliation": "CAS Key Laboratory of Tropical Marine Bio-Resources and Ecology, Guangdong Provincial Key Laboratory of Applied Marine Biology, South China, Sea Institute of Oceanology , Chinese Academy of Sciences, Guangzhou, 510301, China. lingjuan@scsio.ac.cn.",
+          "orcid": null
+        },
+        {
+          "name": "Junde Dong",
+          "first_name": "Junde",
+          "last_name": "Dong",
+          "affiliation": "CAS Key Laboratory of Tropical Marine Bio-Resources and Ecology, Guangdong Provincial Key Laboratory of Applied Marine Biology, South China, Sea Institute of Oceanology , Chinese Academy of Sciences, Guangzhou, 510301, China. dongjd@scsio.ac.cn.",
+          "orcid": null
+        }
+      ],
+      "year": 2024,
+      "journal": "Marine biotechnology (New York, N.Y.)",
+      "volume": "26",
+      "issue": "5",
+      "pages": "951-963",
+      "abstract": "In the background of global warming, coral bleaching induced by elevated seawater temperature is the primary cause of coral reef degradation. Coral microbiome engineering using the beneficial microorganisms for corals (BMCs) has become a hot spot in the field of coral reef conservation and restoration. Investigating the potential of alleviating thermal stress by quorum quenching (QQ) bacteria may provide more tools for coral microbial engineering remediation. In this study, QQ bacteria strain Pseudoalteromonas piscicida SCSIO 43740 was screened among 75 coral-derived bacterial strains, and its quorum sensing inhibitor (QSI) compound was isolated and identified as 2,4-di-tert-butylphenol (2,4-DTBP). Then, the thermal stress alleviating potential of QQ bacteria on coral Pocillopora damicornis was tested by a 30-day controlled experiment with three different treatments: control group (Con: 29 \u00b0C), high temperature group (HT: 31 \u00b0C), and the group of high temperature with QQ bacteria inoculation (HTQQ: 31 \u00b0C + QQ bacteria). The results showed that QQ bacteria SCSIO 43740 inoculation can significantly mitigate the loss of symbiotic algae and impairment of photosynthesis efficiency of coral P. damicornis under thermal stress. Significant difference in superoxide dismutase (SOD) and catalase (CAT) enzyme activities between HT and HTQQ was not observed. In addition, QQ bacteria inoculation suppressed the coral microbial community beta-dispersion and improved the stability of microbial co-occurrence network under thermal stress. It was suggested that QQ bacteria inoculation can alleviate coral thermal stress via reshaping microbial interaction and maintain community stability of coral microbiome. This study provided new evidence for the probiotic function of QQ bacteria in corals, which shedding light on the development of new microbiological tools for coral reef conservation.",
+      "keywords": [
+        "Beneficial microorganisms for corals",
+        "Coral bleaching",
+        "Microbiome engineering",
+        "Quorum quenching bacteria",
+        "Thermal stress"
+      ],
+      "citations": 0,
+      "altmetric_score": null,
+      "relevance_score": 110.0,
+      "url": "https://pubmed.ncbi.nlm.nih.gov/39030411/",
+      "pdf_url": null,
+      "paper_type": "article",
+      "sources": [
+        "pubmed"
+      ],
+      "retrieved_at": "2025-11-07 06:49:47.445180",
+      "local_pdf_path": null
+    },
+    {
+      "title": "Coral recruits demonstrate thermal resilience.",
+      "doi": "10.1111/2041-210X.12628",
+      "pmid": "39553712",
+      "pmcid": "PMC5732543",
+      "arxiv_id": null,
+      "authors": [
+        {
+          "name": "Annika M Lamb",
+          "first_name": "Annika M",
+          "last_name": "Lamb",
+          "affiliation": "Australian Institute of Marine Science, Townsville, Queensland, Australia.",
+          "orcid": null
+        },
+        {
+          "name": "Lesa M Peplow",
+          "first_name": "Lesa M",
+          "last_name": "Peplow",
+          "affiliation": "Australian Institute of Marine Science, Townsville, Queensland, Australia.",
+          "orcid": null
+        },
+        {
+          "name": "Peter L Harrison",
+          "first_name": "Peter L",
+          "last_name": "Harrison",
+          "affiliation": "Marine Ecology Research Centre, Southern Cross University, Lismore, New South Wales, Australia.",
+          "orcid": null
+        },
+        {
+          "name": "Craig A Humphrey",
+          "first_name": "Craig A",
+          "last_name": "Humphrey",
+          "affiliation": "Australian Institute of Marine Science, Townsville, Queensland, Australia.",
+          "orcid": null
+        },
+        {
+          "name": "Lorenzo Latini",
+          "first_name": "Lorenzo",
+          "last_name": "Latini",
+          "affiliation": "Australian Institute of Marine Science, Townsville, Queensland, Australia.",
+          "orcid": null
+        },
+        {
+          "name": "Guy A McCutchan",
+          "first_name": "Guy A",
+          "last_name": "McCutchan",
+          "affiliation": "Australian Institute of Marine Science, Townsville, Queensland, Australia.",
+          "orcid": null
+        },
+        {
+          "name": "Madeleine J H van Oppen",
+          "first_name": "Madeleine J H",
+          "last_name": "van Oppen",
+          "affiliation": "Australian Institute of Marine Science, Townsville, Queensland, Australia.",
+          "orcid": null
+        }
+      ],
+      "year": 2024,
+      "journal": "PeerJ",
+      "volume": "12",
+      "issue": null,
+      "pages": "e18273",
+      "abstract": "Marine heatwaves are becoming more frequent during summer and pose a significant threat to coral reef ecosystems. Restoration efforts have the potential to support native coral populations and guard them against some degree of environmental change, while global action against climate change takes place. Interspecific hybridization is one approach through which resilient coral stock could be generated for restoration. Here we compared the performance of",
+      "keywords": [
+        "Climate change",
+        "Coral",
+        "Hybrid",
+        "Juvenile",
+        "Reef",
+        "Resilience"
+      ],
+      "citations": 0,
+      "altmetric_score": null,
+      "relevance_score": 80.0,
+      "url": "https://pubmed.ncbi.nlm.nih.gov/39553712/",
+      "pdf_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5732543/pdf/",
+      "paper_type": "article",
+      "sources": [
+        "pubmed"
+      ],
+      "retrieved_at": "2025-11-07 06:49:47.445565",
+      "local_pdf_path": null
+    }
+  ],
+  "search_time": 1.1707398891448975,
+  "errors": {}
+}
