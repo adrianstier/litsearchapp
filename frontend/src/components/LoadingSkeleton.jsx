@@ -1,27 +1,37 @@
-import './LoadingSkeleton.css';
-
 export function PaperCardSkeleton() {
   return (
-    <div className="paper-card skeleton-card">
-      <div className="skeleton-header">
-        <div className="skeleton skeleton-title"></div>
-        <div className="skeleton skeleton-title short"></div>
-        <div className="skeleton-badges">
-          <div className="skeleton skeleton-badge"></div>
-          <div className="skeleton skeleton-badge"></div>
+    <div className="card animate-pulse">
+      {/* Header */}
+      <div className="space-y-3">
+        <div className="h-6 w-3/4 bg-slate-200 dark:bg-slate-700 rounded"></div>
+        <div className="h-6 w-1/2 bg-slate-200 dark:bg-slate-700 rounded"></div>
+        <div className="flex gap-2">
+          <div className="h-5 w-16 bg-slate-200 dark:bg-slate-700 rounded-full"></div>
+          <div className="h-5 w-16 bg-slate-200 dark:bg-slate-700 rounded-full"></div>
         </div>
       </div>
-      <div className="skeleton skeleton-text"></div>
-      <div className="skeleton skeleton-text short"></div>
-      <div className="skeleton skeleton-abstract"></div>
-      <div className="skeleton-meta">
-        <div className="skeleton skeleton-meta-item"></div>
-        <div className="skeleton skeleton-meta-item"></div>
-        <div className="skeleton skeleton-meta-item"></div>
+
+      {/* Authors */}
+      <div className="h-4 w-2/3 bg-slate-200 dark:bg-slate-700 rounded"></div>
+
+      {/* Abstract */}
+      <div className="space-y-2">
+        <div className="h-4 w-full bg-slate-200 dark:bg-slate-700 rounded"></div>
+        <div className="h-4 w-full bg-slate-200 dark:bg-slate-700 rounded"></div>
+        <div className="h-4 w-3/4 bg-slate-200 dark:bg-slate-700 rounded"></div>
       </div>
-      <div className="skeleton-actions">
-        <div className="skeleton skeleton-button"></div>
-        <div className="skeleton skeleton-button small"></div>
+
+      {/* Metadata */}
+      <div className="flex gap-4">
+        <div className="h-3 w-20 bg-slate-200 dark:bg-slate-700 rounded"></div>
+        <div className="h-3 w-24 bg-slate-200 dark:bg-slate-700 rounded"></div>
+        <div className="h-3 w-20 bg-slate-200 dark:bg-slate-700 rounded"></div>
+      </div>
+
+      {/* Actions */}
+      <div className="flex gap-2 pt-2">
+        <div className="flex-1 h-10 bg-slate-200 dark:bg-slate-700 rounded-lg"></div>
+        <div className="h-10 w-24 bg-slate-200 dark:bg-slate-700 rounded-lg"></div>
       </div>
     </div>
   );
@@ -29,35 +39,37 @@ export function PaperCardSkeleton() {
 
 export function CollectionCardSkeleton() {
   return (
-    <div className="collection-card skeleton-card">
-      <div className="skeleton skeleton-icon"></div>
-      <div className="skeleton skeleton-title centered"></div>
-      <div className="skeleton skeleton-text centered short"></div>
+    <div className="card animate-pulse">
+      <div className="flex flex-col items-center space-y-3">
+        <div className="h-16 w-16 bg-slate-200 dark:bg-slate-700 rounded-full"></div>
+        <div className="h-6 w-32 bg-slate-200 dark:bg-slate-700 rounded"></div>
+        <div className="h-4 w-24 bg-slate-200 dark:bg-slate-700 rounded"></div>
+      </div>
     </div>
   );
 }
 
 export function SearchBarSkeleton() {
   return (
-    <div className="search-skeleton">
-      <div className="skeleton skeleton-search-bar"></div>
-      <div className="skeleton skeleton-button"></div>
+    <div className="flex gap-3 animate-pulse">
+      <div className="flex-1 h-12 bg-slate-200 dark:bg-slate-700 rounded-lg"></div>
+      <div className="h-12 w-32 bg-slate-200 dark:bg-slate-700 rounded-lg"></div>
     </div>
   );
 }
 
 export function StatBoxSkeleton() {
   return (
-    <div className="stat-box skeleton-card">
-      <div className="skeleton skeleton-stat-number"></div>
-      <div className="skeleton skeleton-text centered"></div>
+    <div className="card animate-pulse flex flex-col items-center space-y-2">
+      <div className="h-12 w-24 bg-slate-200 dark:bg-slate-700 rounded"></div>
+      <div className="h-4 w-32 bg-slate-200 dark:bg-slate-700 rounded"></div>
     </div>
   );
 }
 
 export function PaperGridSkeleton({ count = 6 }) {
   return (
-    <div className="papers-grid">
+    <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
       {Array.from({ length: count }).map((_, i) => (
         <PaperCardSkeleton key={i} />
       ))}
@@ -67,7 +79,7 @@ export function PaperGridSkeleton({ count = 6 }) {
 
 export function CollectionGridSkeleton({ count = 4 }) {
   return (
-    <div className="collections-grid">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
       {Array.from({ length: count }).map((_, i) => (
         <CollectionCardSkeleton key={i} />
       ))}
