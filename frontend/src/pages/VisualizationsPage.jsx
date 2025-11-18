@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer } from 'recharts';
 import { visualizationAPI } from '../services/api';
-import './VisualizationsPage.css';
 
 function VisualizationsPage() {
   const [timelineData, setTimelineData] = useState(null);

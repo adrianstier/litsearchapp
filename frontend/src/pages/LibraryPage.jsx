@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { FaSearch, FaSpinner } from 'react-icons/fa';
 import { papersAPI, authAPI } from '../services/api';
 import PaperCard from '../components/PaperCard';
-import './LibraryPage.css';
 
 function LibraryPage() {
   const [papers, setPapers] = useState([]);

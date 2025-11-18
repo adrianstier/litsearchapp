@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { FaPlus, FaFolder } from 'react-icons/fa';
 import { collectionsAPI } from '../services/api';
-import './CollectionsPage.css';
 
 function CollectionsPage() {
   const [collections, setCollections] = useState([]);

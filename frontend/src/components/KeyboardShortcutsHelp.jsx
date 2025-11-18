@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { FaKeyboard, FaTimes } from 'react-icons/fa';
 import { useFocusTrap } from '../hooks/useKeyboardShortcuts';
 import { useRef, useEffect } from 'react';
-import './KeyboardShortcutsHelp.css';
 
 const shortcuts = [
   { key: '/', description: 'Focus search bar', category: 'Navigation' },

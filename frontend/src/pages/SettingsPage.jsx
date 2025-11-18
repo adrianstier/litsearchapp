@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { FaCheckCircle, FaTimesCircle, FaUpload, FaSpinner } from 'react-icons/fa';
 import { authAPI } from '../services/api';
-import './SettingsPage.css';
 
 function SettingsPage() {
   const [authStatus, setAuthStatus] = useState(null);
