@@ -5,7 +5,6 @@ import PaperCard from '../components/PaperCard';
 import { PaperGridSkeleton } from '../components/LoadingSkeleton';
 import { useKeyboardShortcuts } from '../hooks/useKeyboardShortcuts';
 import { useToast } from '../components/Toast';
-import './SearchPage.css';
 
 function SearchPage({ onStatsUpdate }) {
   const [query, setQuery] = useState('');
@@ -118,195 +117,299 @@ function SearchPage({ onStatsUpdate }) {
   };
 
   return (
-    <div className="search-page">
-      <div className="search-header">
-        <h1>Search Literature</h1>
-        <p>Search across PubMed, arXiv, and Crossref</p>
+    <div className="space-y-8 max-w-7xl mx-auto animate-fade-in">
+      {/* Page Header */}
+      <div className="space-y-2">
+        <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-slate-50">
+          🔍 Search Literature
+        </h1>
+        <p className="text-base md:text-lg text-slate-600 dark:text-slate-400">
+          Search across PubMed, arXiv, Crossref, Google Scholar, and Web of Science
+        </p>
       </div>
 
-      <form onSubmit={handleSearch} className="search-form">
-        <div className="search-input-group">
-          <div className="search-input-wrapper">
+      {/* Search Form */}
+      <form onSubmit={handleSearch} className="space-y-6">
+        {/* Search Input */}
+        <div className="flex flex-col sm:flex-row gap-3">
+          <div className="relative flex-1">
             <input
               ref={searchInputRef}
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Enter search query (Press / or Ctrl+K to focus)"
-              className="search-input"
+              className="input pr-10"
               aria-label="Search query"
             />
             {query && (
               <button
                 type="button"
-                className="clear-search-btn"
+                className="absolute right-3 top-1/2 -translate-y-1/2 p-1.5 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
                 onClick={clearSearch}
                 aria-label="Clear search"
                 title="Clear search (Esc)"
               >
-                <FaTimes />
+                <FaTimes className="w-4 h-4" />
               </button>
             )}
           </div>
-          <button type="submit" className="search-button" disabled={loading || !query.trim()}>
-            {loading ? <FaSpinner className="spinner" /> : <FaSearch />}
-            {loading ? 'Searching...' : 'Search'}
+          <button
+            type="submit"
+            className="btn-primary flex items-center justify-center gap-2 sm:w-auto w-full"
+            disabled={loading || !query.trim()}
+          >
+            {loading ? (
+              <>
+                <FaSpinner className="w-4 h-4 animate-spin" />
+                <span>Searching...</span>
+              </>
+            ) : (
+              <>
+                <FaSearch className="w-4 h-4" />
+                <span>Search</span>
+              </>
+            )}
           </button>
         </div>
 
+        {/* Search History */}
         {searchHistory.length > 0 && !query && (
-          <div className="search-history">
-            <p className="search-history-label">Recent searches:</p>
-            <div className="search-history-items">
+          <div className="space-y-2">
+            <p className="text-sm font-medium text-slate-600 dark:text-slate-400">
+              Recent searches:
+            </p>
+            <div className="flex flex-wrap gap-2">
               {searchHistory.map((historyQuery, index) => (
                 <button
                   key={index}
                   type="button"
-                  className="search-history-item"
+                  className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 transition-colors"
                   onClick={() => setQuery(historyQuery)}
                 >
-                  <FaSearch /> {historyQuery}
+                  <FaSearch className="w-3 h-3" />
+                  <span>{historyQuery}</span>
                 </button>
               ))}
             </div>
           </div>
         )}
 
-        <div className="search-filters">
-          <div className="filter-group">
-            <label>Sources:</label>
-            <div className="checkbox-group">
-              <label className="checkbox-label">
+        {/* Filters */}
+        <div className="card space-y-6">
+          {/* Sources */}
+          <div className="space-y-3">
+            <label className="block text-sm font-semibold text-slate-900 dark:text-slate-50">
+              Sources:
+            </label>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+              <label className="flex items-center gap-2 cursor-pointer">
                 <input
                   type="checkbox"
                   checked={sources.includes('pubmed')}
                   onChange={() => toggleSource('pubmed')}
+                  className="w-5 h-5 rounded border-2 border-slate-300 dark:border-slate-600 text-primary-600 focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-800 transition-all"
                 />
-                PubMed
+                <span className="text-sm font-medium text-slate-700 dark:text-slate-300">
+                  PubMed
+                </span>
               </label>
-              <label className="checkbox-label">
+              <label className="flex items-center gap-2 cursor-pointer">
                 <input
                   type="checkbox"
                   checked={sources.includes('arxiv')}
                   onChange={() => toggleSource('arxiv')}
+                  className="w-5 h-5 rounded border-2 border-slate-300 dark:border-slate-600 text-primary-600 focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-800 transition-all"
                 />
-                arXiv
+                <span className="text-sm font-medium text-slate-700 dark:text-slate-300">
+                  arXiv
+                </span>
               </label>
-              <label className="checkbox-label">
+              <label className="flex items-center gap-2 cursor-pointer">
                 <input
                   type="checkbox"
                   checked={sources.includes('crossref')}
                   onChange={() => toggleSource('crossref')}
+                  className="w-5 h-5 rounded border-2 border-slate-300 dark:border-slate-600 text-primary-600 focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-800 transition-all"
                 />
-                Crossref
+                <span className="text-sm font-medium text-slate-700 dark:text-slate-300">
+                  Crossref
+                </span>
               </label>
-              <label className="checkbox-label">
+              <label className="flex items-center gap-2 cursor-pointer">
                 <input
                   type="checkbox"
                   checked={sources.includes('scholar')}
                   onChange={() => toggleSource('scholar')}
+                  className="w-5 h-5 rounded border-2 border-slate-300 dark:border-slate-600 text-primary-600 focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-800 transition-all"
                 />
-                Google Scholar
+                <span className="text-sm font-medium text-slate-700 dark:text-slate-300">
+                  Google Scholar
+                </span>
               </label>
-              <label className="checkbox-label">
+              <label className="flex items-center gap-2 cursor-pointer">
                 <input
                   type="checkbox"
                   checked={sources.includes('wos')}
                   onChange={() => toggleSource('wos')}
+                  className="w-5 h-5 rounded border-2 border-slate-300 dark:border-slate-600 text-primary-600 focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-800 transition-all"
                 />
-                Web of Science {!ucsbAuthenticated && <span className="ucsb-required">*</span>}
+                <span className="text-sm font-medium text-slate-700 dark:text-slate-300">
+                  Web of Science
+                  {!ucsbAuthenticated && (
+                    <span className="text-warning-600 dark:text-warning-400 ml-1">*</span>
+                  )}
+                </span>
               </label>
             </div>
             {!ucsbAuthenticated && (
-              <p className="ucsb-note">
-                * Web of Science requires UCSB authentication
+              <p className="text-xs text-warning-600 dark:text-warning-400">
+                * Web of Science requires UCSB authentication (configure in Settings)
               </p>
             )}
           </div>
 
-          <div className="filter-group">
-            <label>Max Results:</label>
-            <select value={maxResults} onChange={(e) => setMaxResults(Number(e.target.value))}>
-              <option value={10}>10</option>
-              <option value={20}>20</option>
-              <option value={50}>50</option>
-              <option value={100}>100</option>
-            </select>
-          </div>
+          {/* Other Filters */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {/* Max Results */}
+            <div className="space-y-2">
+              <label className="block text-sm font-semibold text-slate-900 dark:text-slate-50">
+                Max Results:
+              </label>
+              <select
+                value={maxResults}
+                onChange={(e) => setMaxResults(Number(e.target.value))}
+                className="input"
+              >
+                <option value={10}>10 results</option>
+                <option value={20}>20 results</option>
+                <option value={50}>50 results</option>
+                <option value={100}>100 results</option>
+              </select>
+            </div>
 
-          <div className="filter-group">
-            <label>Year Range:</label>
-            <div className="year-range">
-              <input
-                type="number"
-                placeholder="From"
-                value={yearStart}
-                onChange={(e) => setYearStart(e.target.value)}
-                className="year-input"
-              />
-              <span>-</span>
-              <input
-                type="number"
-                placeholder="To"
-                value={yearEnd}
-                onChange={(e) => setYearEnd(e.target.value)}
-                className="year-input"
-              />
+            {/* Year Range */}
+            <div className="space-y-2">
+              <label className="block text-sm font-semibold text-slate-900 dark:text-slate-50">
+                Year Range:
+              </label>
+              <div className="flex items-center gap-2">
+                <input
+                  type="number"
+                  placeholder="From"
+                  value={yearStart}
+                  onChange={(e) => setYearStart(e.target.value)}
+                  className="input flex-1"
+                  min="1900"
+                  max={new Date().getFullYear()}
+                />
+                <span className="text-slate-400 dark:text-slate-600">—</span>
+                <input
+                  type="number"
+                  placeholder="To"
+                  value={yearEnd}
+                  onChange={(e) => setYearEnd(e.target.value)}
+                  className="input flex-1"
+                  min="1900"
+                  max={new Date().getFullYear()}
+                />
+              </div>
             </div>
           </div>
         </div>
       </form>
 
+      {/* Error Message */}
       {error && (
-        <div className="error-message">
-          <strong>Error:</strong> {error}
+        <div className="flex items-start gap-3 p-4 rounded-lg bg-error-50 dark:bg-error-900/20 border border-error-200 dark:border-error-800 text-error-900 dark:text-error-100">
+          <span className="font-semibold">Error:</span>
+          <span>{error}</span>
         </div>
       )}
 
+      {/* Loading State */}
       {loading && (
         <PaperGridSkeleton count={6} />
       )}
 
+      {/* Search Results */}
       {!loading && results && (
-        <div className="search-results">
-          <div className="results-header">
-            <h2>
+        <div className="space-y-6">
+          {/* Results Header */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-50">
               Found {results.total_found} papers in {results.search_time.toFixed(2)}s
             </h2>
-            <div className="results-stats">
+            <div className="flex flex-wrap gap-2">
               {Object.entries(results.statistics).map(([source, count]) => (
-                <span key={source} className="stat-badge">
+                <span
+                  key={source}
+                  className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wide ${
+                    source === 'pubmed' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300' :
+                    source === 'arxiv' ? 'bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-300' :
+                    source === 'crossref' ? 'bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300' :
+                    source === 'scholar' ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300' :
+                    'bg-indigo-100 text-indigo-800 dark:bg-indigo-900/30 dark:text-indigo-300'
+                  }`}
+                >
                   {source}: {count}
                 </span>
               ))}
             </div>
           </div>
 
+          {/* Papers Grid */}
           {results.papers && results.papers.length > 0 ? (
-            <div className="papers-grid">
+            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
               {results.papers.map((paper) => (
                 <PaperCard key={paper.id} paper={paper} ucsbAuthenticated={ucsbAuthenticated} />
               ))}
             </div>
           ) : (
-            <div className="no-results">
-              <p>No papers found. Try adjusting your search terms or filters.</p>
+            <div className="text-center py-12 card">
+              <p className="text-lg text-slate-600 dark:text-slate-400">
+                No papers found. Try adjusting your search terms or filters.
+              </p>
             </div>
           )}
         </div>
       )}
 
+      {/* Empty State */}
       {!results && !loading && (
-        <div className="search-placeholder">
-          <FaSearch size={64} color="#ccc" />
-          <p>Enter a search query to find academic papers</p>
-          <div className="example-queries">
-            <p><strong>Example queries:</strong></p>
-            <ul>
-              <li>CRISPR gene editing</li>
-              <li>machine learning healthcare</li>
-              <li>climate change adaptation</li>
-              <li>quantum computing algorithms</li>
+        <div className="text-center py-16 space-y-6 card">
+          <div className="flex justify-center">
+            <FaSearch className="w-16 h-16 text-slate-300 dark:text-slate-700" />
+          </div>
+          <div className="space-y-2">
+            <h3 className="text-xl font-semibold text-slate-900 dark:text-slate-50">
+              Ready to search academic literature
+            </h3>
+            <p className="text-base text-slate-600 dark:text-slate-400">
+              Enter a search query to find papers across multiple databases
+            </p>
+          </div>
+          <div className="max-w-md mx-auto text-left space-y-3">
+            <p className="text-sm font-semibold text-slate-700 dark:text-slate-300">
+              Example queries:
+            </p>
+            <ul className="space-y-2 text-sm text-slate-600 dark:text-slate-400">
+              <li className="flex items-start gap-2">
+                <span className="text-primary-500 mt-0.5">•</span>
+                <span>CRISPR gene editing</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-primary-500 mt-0.5">•</span>
+                <span>machine learning healthcare</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-primary-500 mt-0.5">•</span>
+                <span>climate change adaptation</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-primary-500 mt-0.5">•</span>
+                <span>quantum computing algorithms</span>
+              </li>
             </ul>
           </div>
         </div>

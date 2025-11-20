@@ -7,7 +7,6 @@ import {
 import { downloadAPI } from '../services/api';
 import { useClickOutside } from '../hooks/useKeyboardShortcuts';
 import { useToast } from './Toast';
-import './PaperCard.css';
 
 function PaperCard({ paper, ucsbAuthenticated }) {
   const [downloading, setDownloading] = useState(false);
@@ -68,7 +67,6 @@ function PaperCard({ paper, ucsbAuthenticated }) {
         toast.info('Sharing cancelled');
       });
     } else {
-      // Fallback: copy link to clipboard
       if (paper.url) {
         navigator.clipboard.writeText(paper.url).then(() => {
           toast.success('Link copied to clipboard');
@@ -91,140 +89,233 @@ function PaperCard({ paper, ucsbAuthenticated }) {
   };
 
   return (
-    <div className="paper-card">
-      <div className="paper-header">
-        <div className="paper-title-row">
-          <h3 className="paper-title">{paper.title}</h3>
-          <div className="paper-quick-actions" ref={quickActionsRef}>
+    <div className="card-hover border-l-4 border-l-primary-500 group">
+      {/* Header */}
+      <div className="space-y-3">
+        {/* Title and Actions */}
+        <div className="flex items-start justify-between gap-3">
+          <h3 className="text-lg font-bold text-slate-900 dark:text-slate-50 leading-tight flex-1">
+            {paper.title}
+          </h3>
+
+          {/* Quick Actions Menu */}
+          <div className="relative flex-shrink-0" ref={quickActionsRef}>
             <button
-              className="quick-action-toggle"
+              className="p-2 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
               onClick={() => setShowQuickActions(!showQuickActions)}
               aria-label="Quick actions"
               title="Quick actions"
             >
-              <FaEllipsisV />
+              <FaEllipsisV className="w-4 h-4" />
             </button>
+
             {showQuickActions && (
-              <div className="quick-actions-menu">
-                <button onClick={handleBookmark} className="quick-action-item">
-                  {isBookmarked ? <FaBookmark /> : <FaRegBookmark />}
-                  {isBookmarked ? 'Remove Bookmark' : 'Bookmark'}
+              <div className="absolute right-0 top-full mt-1 w-48 bg-white dark:bg-slate-800 rounded-lg shadow-xl border border-slate-200 dark:border-slate-700 py-1 z-10 animate-scale-in">
+                <button
+                  onClick={handleBookmark}
+                  className="w-full flex items-center gap-3 px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
+                >
+                  {isBookmarked ? <FaBookmark className="w-4 h-4" /> : <FaRegBookmark className="w-4 h-4" />}
+                  <span>{isBookmarked ? 'Remove Bookmark' : 'Bookmark'}</span>
                 </button>
-                <button onClick={handleCopyCitation} className="quick-action-item">
-                  <FaCopy /> Copy Citation
+                <button
+                  onClick={handleCopyCitation}
+                  className="w-full flex items-center gap-3 px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
+                >
+                  <FaCopy className="w-4 h-4" />
+                  <span>Copy Citation</span>
                 </button>
-                <button onClick={handleShare} className="quick-action-item">
-                  <FaShareAlt /> Share
+                <button
+                  onClick={handleShare}
+                  className="w-full flex items-center gap-3 px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
+                >
+                  <FaShareAlt className="w-4 h-4" />
+                  <span>Share</span>
                 </button>
               </div>
             )}
           </div>
         </div>
-        <div className="paper-sources">
-          {paper.sources && paper.sources.map((source) => (
-            <span key={source} className={`source-badge ${source}`}>
-              {source}
-            </span>
-          ))}
-        </div>
-      </div>
 
-      <div className="paper-authors">
-        {paper.authors && paper.authors.length > 0 ? (
-          <span>
-            {paper.authors.slice(0, 3).map(a => a.name).join(', ')}
-            {paper.authors.length > 3 && ` +${paper.authors.length - 3} more`}
-          </span>
-        ) : (
-          <span className="no-authors">No authors listed</span>
+        {/* Source Badges */}
+        {paper.sources && paper.sources.length > 0 && (
+          <div className="flex flex-wrap gap-2">
+            {paper.sources.map((source) => (
+              <span
+                key={source}
+                className={`
+                  inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold uppercase tracking-wide
+                  ${source === 'pubmed' ? 'badge-pubmed' : ''}
+                  ${source === 'arxiv' ? 'badge-arxiv' : ''}
+                  ${source === 'crossref' ? 'badge-crossref' : ''}
+                  ${source === 'scholar' ? 'badge-scholar' : ''}
+                  ${source === 'wos' ? 'badge-wos' : ''}
+                `}
+              >
+                {source}
+              </span>
+            ))}
+          </div>
         )}
       </div>
 
+      {/* Authors */}
+      <div className="text-sm text-slate-600 dark:text-slate-400">
+        {paper.authors && paper.authors.length > 0 ? (
+          <span>
+            {paper.authors.slice(0, 3).map(a => a.name).join(', ')}
+            {paper.authors.length > 3 && (
+              <span className="text-slate-500 dark:text-slate-500"> +{paper.authors.length - 3} more</span>
+            )}
+          </span>
+        ) : (
+          <span className="italic text-slate-400 dark:text-slate-600">No authors listed</span>
+        )}
+      </div>
+
+      {/* Abstract */}
       {paper.abstract && (
-        <div className="paper-abstract">
-          <FaQuoteLeft size={12} />
-          <p>
-            {showFullAbstract
-              ? paper.abstract
-              : `${paper.abstract.substring(0, 200)}${paper.abstract.length > 200 ? '...' : ''}`
-            }
-          </p>
+        <div className="space-y-2">
+          <div className="flex items-start gap-2">
+            <FaQuoteLeft className="w-3 h-3 text-slate-400 dark:text-slate-600 flex-shrink-0 mt-1" />
+            <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+              {showFullAbstract
+                ? paper.abstract
+                : `${paper.abstract.substring(0, 200)}${paper.abstract.length > 200 ? '...' : ''}`
+              }
+            </p>
+          </div>
           {paper.abstract.length > 200 && (
             <button
-              className="abstract-toggle"
+              className="inline-flex items-center gap-1.5 text-xs font-medium text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition-colors"
               onClick={() => setShowFullAbstract(!showFullAbstract)}
               aria-label={showFullAbstract ? 'Show less' : 'Show more'}
             >
+              <span>{showFullAbstract ? 'Show less' : 'Show more'}</span>
               {showFullAbstract ? (
-                <>Show less <FaChevronUp /></>
+                <FaChevronUp className="w-3 h-3" />
               ) : (
-                <>Show more <FaChevronDown /></>
+                <FaChevronDown className="w-3 h-3" />
               )}
             </button>
           )}
         </div>
       )}
 
-      <div className="paper-meta">
-        {paper.year && <span>📅 {paper.year}</span>}
-        {paper.journal && <span>📰 {paper.journal}</span>}
-        {paper.citations !== undefined && <span>📊 {paper.citations} citations</span>}
+      {/* Metadata */}
+      <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-slate-600 dark:text-slate-400">
+        {paper.year && (
+          <span className="flex items-center gap-1.5">
+            <span>📅</span>
+            <span>{paper.year}</span>
+          </span>
+        )}
+        {paper.journal && (
+          <span className="flex items-center gap-1.5">
+            <span>📰</span>
+            <span className="line-clamp-1">{paper.journal}</span>
+          </span>
+        )}
+        {paper.citations !== undefined && (
+          <span className="flex items-center gap-1.5">
+            <span>📊</span>
+            <span>{paper.citations} citations</span>
+          </span>
+        )}
       </div>
 
+      {/* DOI */}
       {paper.doi && (
-        <div className="paper-doi">
-          <strong>DOI:</strong>
-          <span className="doi-text">{paper.doi}</span>
+        <div className="flex items-center gap-2 p-2 bg-slate-50 dark:bg-slate-900 rounded-lg">
+          <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">DOI:</span>
+          <span className="text-xs text-slate-600 dark:text-slate-400 flex-1 truncate font-mono">
+            {paper.doi}
+          </span>
           <button
-            className="doi-copy-btn"
+            className="p-1.5 rounded text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors"
             onClick={handleCopyDOI}
             aria-label="Copy DOI"
             title="Copy DOI to clipboard"
           >
-            <FaCopy />
+            <FaCopy className="w-3 h-3" />
           </button>
         </div>
       )}
 
+      {/* Download Status */}
       {downloadStatus && (
-        <div className={`download-status ${downloadStatus.type}`}>
-          {downloadStatus.type === 'success' ? <FaCheckCircle /> : null}
+        <div className={`
+          flex items-center gap-2 p-3 rounded-lg text-sm
+          ${downloadStatus.type === 'success'
+            ? 'bg-success-50 dark:bg-success-900/20 text-success-900 dark:text-success-100 border border-success-200 dark:border-success-800'
+            : 'bg-error-50 dark:bg-error-900/20 text-error-900 dark:text-error-100 border border-error-200 dark:border-error-800'
+          }
+        `}>
+          {downloadStatus.type === 'success' && <FaCheckCircle className="w-4 h-4 flex-shrink-0" />}
           <span>{downloadStatus.message}</span>
         </div>
       )}
 
-      <div className="paper-actions">
+      {/* Actions */}
+      <div className="flex flex-wrap gap-2 pt-2">
         <button
           onClick={handleDownload}
-          className={`btn-download ${downloading ? 'downloading' : ''} ${ucsbAuthenticated ? 'ucsb-enabled' : ''}`}
+          className={`
+            flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg font-semibold text-sm transition-all
+            ${ucsbAuthenticated
+              ? 'bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white shadow-sm hover:shadow-md'
+              : 'btn-primary'
+            }
+            disabled:opacity-50 disabled:cursor-not-allowed
+          `}
           disabled={downloading}
           title={ucsbAuthenticated ? 'Download with UCSB access' : 'Download PDF'}
         >
           {downloading ? (
             <>
-              <FaSpinner className="spinner" /> Downloading...
+              <FaSpinner className="w-4 h-4 animate-spin" />
+              <span>Downloading...</span>
             </>
           ) : (
             <>
-              <FaDownload /> {ucsbAuthenticated ? 'Download (UCSB)' : 'Download PDF'}
+              <FaDownload className="w-4 h-4" />
+              <span>{ucsbAuthenticated ? 'Download (UCSB)' : 'Download PDF'}</span>
             </>
           )}
         </button>
+
         {paper.url && (
-          <a href={paper.url} target="_blank" rel="noopener noreferrer" className="btn-external">
-            <FaExternalLinkAlt /> View Online
+          <a
+            href={paper.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-secondary flex items-center justify-center gap-2 px-4 py-2.5"
+          >
+            <FaExternalLinkAlt className="w-3 h-3" />
+            <span className="hidden sm:inline">View Online</span>
           </a>
         )}
+
         {paper.pdf_url && (
-          <a href={paper.pdf_url} target="_blank" rel="noopener noreferrer" className="btn-pdf">
-            <FaFileAlt /> Direct PDF
+          <a
+            href={paper.pdf_url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-ghost flex items-center justify-center gap-2 px-4 py-2.5"
+          >
+            <FaFileAlt className="w-4 h-4" />
+            <span className="hidden sm:inline">Direct PDF</span>
           </a>
         )}
       </div>
 
+      {/* UCSB Access Notice */}
       {ucsbAuthenticated && (
-        <div className="ucsb-access-notice">
-          ✨ UCSB institutional access enabled - Higher success rate for paywalled papers
+        <div className="flex items-center gap-2 p-2 bg-primary-50 dark:bg-primary-900/20 rounded-lg border border-primary-200 dark:border-primary-800">
+          <span className="text-xl">✨</span>
+          <p className="text-xs text-primary-900 dark:text-primary-100 font-medium">
+            UCSB institutional access enabled - Higher success rate for paywalled papers
+          </p>
         </div>
       )}
     </div>
