@@ -1,0 +1,121 @@
+
+================================================================================
+  COMPREHENSIVE BACKEND SEARCH TESTS
+  2025-11-08 06:36:12
+================================================================================
+
+✅ Backend is running
+
+
+================================================================================
+  TEST 1: Basic Search (PubMed only)
+================================================================================
+
+✅ Basic PubMed Search
+   Total Results: 0
+   - PubMed: 5 papers
+   Search Time: 0.95s
+
+   Sample Paper:
+   Title: Introduction to Machine Learning, Neural Networks, and Deep Learning....
+❌ Basic PubMed Search
+   Error: sequence item 0: expected str instance, dict found
+
+================================================================================
+  TEST 2: Multi-Source Search (PubMed + arXiv + Crossref)
+================================================================================
+
+✅ Multi-Source Search
+   Total Results: 0
+   - Unknown: 30 papers
+   Search Time: 9.20s
+
+================================================================================
+  TEST 3: Year Range Filter (2020-2023)
+================================================================================
+
+✅ Year Range Filter
+   Total Results: 0
+   - PubMed: 10 papers
+   Search Time: 1.36s
+   Year Range: 2020-2022
+   ✓ All papers within range
+
+================================================================================
+  TEST 4: arXiv Search
+================================================================================
+
+✅ arXiv Search
+   Total Results: 0
+   - arXiv: 5 papers
+   Search Time: 4.10s
+
+   Sample arXiv Paper:
+   Title: The Rise of Quantum Internet Computing...
+   ArXiv ID: 2208.00733v1
+   PDF URL: http://arxiv.org/pdf/2208.00733v1
+
+================================================================================
+  TEST 5: Crossref Search
+================================================================================
+
+✅ Crossref Search
+   Total Results: 0
+   - Crossref: 5 papers
+   Search Time: 0.50s
+
+   Sample Crossref Paper:
+   Title: Extreme Weather and Climate Change...
+   DOI: 10.1093/wentk/9780197647127.003.0002
+   Journal: Climate Change
+
+================================================================================
+  TEST 6: All Sources Search
+================================================================================
+
+✅ All Sources Search
+   Total Results: 0
+   - Unknown: 60 papers
+   Search Time: 19.59s
+
+   Total Papers: 60
+   Unique Titles: 56
+   ⚠ 4 potential duplicates detected
+
+================================================================================
+  TEST 7: Max Results Limit (2 papers)
+================================================================================
+
+✅ Max Results Limit
+   Total Results: 0
+   - PubMed: 2 papers
+   Search Time: 0.96s
+   ✓ Correctly limited to 2 papers
+
+================================================================================
+  TEST 8: Complex Query
+================================================================================
+
+✅ Complex Query
+   Total Results: 0
+   - Unknown: 20 papers
+   Search Time: 9.21s
+
+================================================================================
+  TEST 9: Empty Query Error Handling
+================================================================================
+
+✅ Empty Query Handling
+   Correctly rejected empty query with 422 status
+
+================================================================================
+  TEST 10: Invalid Source Error Handling
+================================================================================
+
+❌ Invalid Source Handling
+   Error: Unexpected status 500
+
+================================================================================
+  TESTS COMPLETE
+================================================================================
+

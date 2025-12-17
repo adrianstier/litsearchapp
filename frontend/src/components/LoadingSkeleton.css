@@ -1,14 +1,18 @@
-/* Loading Skeleton Styles */
+/**
+ * Loading Skeleton Styles
+ * Scientific Illustration - Ink wash loading states
+ */
+
 .skeleton {
   background: linear-gradient(
     90deg,
-    var(--gray-200) 0%,
-    var(--gray-300) 50%,
-    var(--gray-200) 100%
+    var(--color-fill-tertiary) 0%,
+    var(--color-fill-secondary) 50%,
+    var(--color-fill-tertiary) 100%
   );
   background-size: 200% 100%;
   animation: skeleton-loading 1.5s ease-in-out infinite;
-  border-radius: 0.5rem;
+  border-radius: var(--radius-sm);
 }
 
 @keyframes skeleton-loading {
@@ -27,9 +31,9 @@
 
 /* Paper Card Skeleton */
 .skeleton-title {
-  height: 1.5rem;
+  height: 1.25rem;
   width: 100%;
-  margin-bottom: 0.75rem;
+  margin-bottom: var(--space-3);
 }
 
 .skeleton-title.short {
@@ -43,20 +47,20 @@
 
 .skeleton-badges {
   display: flex;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
 }
 
 .skeleton-badge {
-  height: 1.5rem;
-  width: 5rem;
-  border-radius: 1rem;
+  height: 1.25rem;
+  width: 4rem;
+  border-radius: var(--radius-sm);
 }
 
 .skeleton-text {
-  height: 1rem;
+  height: 0.875rem;
   width: 100%;
-  margin-bottom: 0.5rem;
+  margin-bottom: var(--space-2);
 }
 
 .skeleton-text.short {
@@ -69,74 +73,74 @@
 }
 
 .skeleton-abstract {
-  height: 5rem;
+  height: 4rem;
   width: 100%;
-  margin: 1rem 0;
-  border-radius: 0.75rem;
+  margin: var(--space-3) 0;
+  border-radius: var(--radius-sm);
 }
 
 .skeleton-meta {
   display: flex;
-  gap: 1rem;
-  margin: 1rem 0;
+  gap: var(--space-3);
+  margin: var(--space-3) 0;
 }
 
 .skeleton-meta-item {
-  height: 1rem;
-  width: 6rem;
+  height: 0.875rem;
+  width: 5rem;
 }
 
 .skeleton-actions {
   display: flex;
-  gap: 0.75rem;
-  margin-top: 1.5rem;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
 }
 
 .skeleton-button {
-  height: 2.75rem;
-  width: 10rem;
-  border-radius: 0.75rem;
+  height: 2.25rem;
+  width: 8rem;
+  border-radius: var(--radius-sm);
 }
 
 .skeleton-button.small {
-  width: 7rem;
+  width: 6rem;
 }
 
 /* Collection Card Skeleton */
 .skeleton-icon {
-  height: 4rem;
-  width: 4rem;
-  border-radius: 50%;
-  margin: 0 auto 1rem;
+  height: 3rem;
+  width: 3rem;
+  border-radius: var(--radius-sm);
+  margin: 0 auto var(--space-3);
 }
 
 /* Search Bar Skeleton */
 .search-skeleton {
   display: flex;
-  gap: 1rem;
-  margin-bottom: 2rem;
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
 }
 
 .skeleton-search-bar {
   flex: 1;
-  height: 3.5rem;
-  border-radius: 0.75rem;
+  height: 2.75rem;
+  border-radius: var(--radius-sm);
 }
 
 /* Stat Box Skeleton */
 .skeleton-stat-number {
-  height: 3rem;
-  width: 6rem;
-  margin: 0 auto 1rem;
+  height: 2.5rem;
+  width: 5rem;
+  margin: 0 auto var(--space-3);
 }
 
 /* Dark Theme Support */
 [data-theme="dark"] .skeleton {
   background: linear-gradient(
     90deg,
-    var(--gray-700) 0%,
-    var(--gray-600) 50%,
-    var(--gray-700) 100%
+    var(--color-fill-tertiary) 0%,
+    var(--color-fill-secondary) 50%,
+    var(--color-fill-tertiary) 100%
   );
   background-size: 200% 100%;
 }
@@ -145,10 +149,6 @@
 @media (prefers-reduced-motion: reduce) {
   .skeleton {
     animation: none;
-    background: var(--gray-300);
-  }
-
-  [data-theme="dark"] .skeleton {
-    background: var(--gray-700);
+    background: var(--color-fill-tertiary);
   }
 }

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { FaCheckCircle, FaTimesCircle, FaUpload, FaSpinner } from 'react-icons/fa';
+import { FaCheckCircle, FaTimesCircle, FaUpload, FaSpinner, FaNetworkWired, FaCookie } from 'react-icons/fa';
 import { authAPI } from '../services/api';
 import './SettingsPage.css';
 
@@ -77,7 +77,46 @@ function SettingsPage() {
       </div>
 
       <div className="settings-section">
-        <h2>UCSB Library Authentication</h2>
+        <h2>UCSB Library Access</h2>
+
+        <div className="access-options">
+          <div className="access-option">
+            <div className="option-header">
+              <FaNetworkWired className="option-icon" />
+              <h3>Option 1: VPN (Recommended)</h3>
+            </div>
+            <p className="option-description">
+              Connect to the UCSB VPN for automatic institutional access. This is the simplest method and works system-wide.
+            </p>
+            <div className="vpn-instructions">
+              <ol>
+                <li>Download and install the <a href="https://www.it.ucsb.edu/pulse-secure-campus-vpn/get-connected-vpn" target="_blank" rel="noopener noreferrer">UCSB Pulse Secure VPN client</a></li>
+                <li>Connect using your UCSB NetID credentials</li>
+                <li>Complete DUO two-factor authentication</li>
+                <li>Once connected, all paper downloads will have institutional access</li>
+              </ol>
+              <div className="note">
+                <strong>Tip:</strong> When connected to VPN, you can access <a href="https://login.proxy.library.ucsb.edu/menu" target="_blank" rel="noopener noreferrer">UCSB Library Proxy</a> for additional resources.
+              </div>
+            </div>
+          </div>
+
+          <div className="option-divider">
+            <span>OR</span>
+          </div>
+
+          <div className="access-option">
+            <div className="option-header">
+              <FaCookie className="option-icon" />
+              <h3>Option 2: Cookie Authentication</h3>
+            </div>
+            <p className="option-description">
+              Import browser cookies for access without VPN. Useful when you can't use VPN but need institutional access.
+            </p>
+          </div>
+        </div>
+
+        <h3 className="auth-status-title">Cookie Authentication Status</h3>
 
         {loading ? (
           <p>Loading...</p>

@@ -81,4 +81,65 @@ export const statsAPI = {
   get: () => api.get('/stats'),
 };
 
+// Discovery API (ResearchRabbit-style features)
+export const discoveryAPI = {
+  getRecommendations: (paperId, limit = 10) =>
+    api.get(`/papers/${paperId}/recommendations?limit=${limit}`),
+  getCitations: (paperId, limit = 50) =>
+    api.get(`/papers/${paperId}/citations?limit=${limit}`),
+  getReferences: (paperId, limit = 50) =>
+    api.get(`/papers/${paperId}/references?limit=${limit}`),
+  getRelated: (paperId, limit = 10) =>
+    api.get(`/papers/${paperId}/related?limit=${limit}`),
+  getNetwork: (paperId, depth = 1) =>
+    api.get(`/papers/${paperId}/network?depth=${depth}`),
+  getSimilar: (paperId, topK = 5) =>
+    api.get(`/papers/${paperId}/similar?top_k=${topK}`),
+};
+
+// AI-Powered Features API
+export const aiAPI = {
+  // Generate summaries for papers
+  summarize: (paperIds) =>
+    api.post('/ai/summarize', paperIds),
+
+  // Extract structured data from a paper
+  extract: (paperId, fields) =>
+    api.post('/ai/extract', null, {
+      params: { paper_id: paperId, fields }
+    }),
+
+  // Extract custom column data
+  customColumn: (paperIds, columnName, columnDescription) =>
+    api.post('/ai/custom-column', null, {
+      params: {
+        paper_ids: paperIds,
+        column_name: columnName,
+        column_description: columnDescription
+      }
+    }),
+
+  // Compare papers
+  compare: (paperIds, aspect = 'findings') =>
+    api.post('/ai/compare', null, {
+      params: { paper_ids: paperIds, aspect }
+    }),
+};
+
+// Semantic Search API
+export const semanticAPI = {
+  // Semantic search/reranking
+  search: (query, paperIds = null, topK = 20) =>
+    api.post('/search/semantic', null, {
+      params: { query, paper_ids: paperIds, top_k: topK }
+    }),
+};
+
+// Network Visualization API
+export const networkAPI = {
+  // Get D3.js formatted network
+  getD3Network: (paperId) =>
+    api.get(`/network/d3/${paperId}`),
+};
+
 export default api;

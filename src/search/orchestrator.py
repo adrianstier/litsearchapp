@@ -10,6 +10,8 @@ from src.search.arxiv import ArxivSearch
 from src.search.crossref import CrossrefSearch
 from src.search.scholar import GoogleScholarProvider
 from src.search.wos import WebOfScienceProvider
+from src.search.semantic_scholar import SemanticScholarProvider
+from src.search.openalex import OpenAlexProvider
 from src.search.deduplicator import Deduplicator
 from src.utils.config import Config
 
@@ -31,6 +33,8 @@ class SearchOrchestrator:
             Source.CROSSREF: CrossrefSearch(),
             Source.GOOGLE_SCHOLAR: GoogleScholarProvider(ucsb_session=ucsb_session),
             Source.WEB_OF_SCIENCE: WebOfScienceProvider(ucsb_session=ucsb_session),
+            Source.SEMANTIC_SCHOLAR: SemanticScholarProvider(),
+            Source.OPENALEX: OpenAlexProvider(),
         }
         self.deduplicator = Deduplicator()
 

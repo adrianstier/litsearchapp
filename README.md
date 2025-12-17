@@ -1,95 +1,124 @@
 # Literature Search Application
 
-An intelligent academic literature search tool that aggregates results from multiple databases, downloads PDFs, and provides comprehensive search capabilities.
+A full-stack academic literature search platform that aggregates results from 7 major databases, provides intelligent deduplication and ranking, and offers ResearchRabbit-style discovery features through citation networks.
 
-## Features
+## Key Features
 
-- **Multi-source search**: Search across PubMed, arXiv, and Crossref simultaneously
-- **Intelligent deduplication**: Automatically merges duplicate papers from different sources
-- **PDF retrieval**: Download open-access PDFs from PMC, arXiv, and Unpaywall
-- **Smart ranking**: Papers ranked by relevance, citations, and recency
-- **Rich CLI**: Beautiful command-line interface with tables and progress indicators
-- **Flexible filtering**: Filter by year, paper type, authors, and journals
-
-## Installation
-
-### Prerequisites
-
-- Python 3.10 or higher
-- pip
-
-### Install from source
-
-```bash
-# Clone the repository (or create the directory)
-cd litsearchapp
-
-# Install in development mode
-pip install -e .
-
-# Or install dependencies directly
-pip install -r requirements.txt
-```
+- **Multi-source search**: Search across PubMed, arXiv, Crossref, Google Scholar, Web of Science, Semantic Scholar, and OpenAlex simultaneously
+- **Intelligent deduplication**: Automatically merge duplicate papers using DOI, PMID, arXiv ID, and title similarity matching
+- **Smart ranking**: Papers ranked by relevance, citations, recency, and source diversity
+- **ResearchRabbit-style discovery**: Explore citations, references, recommendations, and related papers
+- **Citation network visualization**: Interactive graph visualization of paper relationships
+- **UCSB library integration**: Access paywalled content through institutional proxy
+- **Modern UI**: React frontend with dark/light themes, responsive design, and keyboard shortcuts
+- **PDF retrieval**: Multi-strategy download from PMC, arXiv, Unpaywall, and institutional access
 
 ## Quick Start
 
-### Basic search
+### Prerequisites
+
+- Python 3.10+
+- Node.js 16+
+- pip and npm
+
+### Installation
 
 ```bash
-# Simple search
-litsearch search "CRISPR gene editing"
+# Clone the repository
+git clone https://github.com/adrianstier/litsearchapp.git
+cd litsearchapp
 
-# Search with specific sources and download PDFs
-litsearch search "machine learning healthcare" -s pubmed -s arxiv --download
+# Install backend dependencies
+pip install -r requirements.txt
 
-# Quick search (minimal output)
-litsearch quick "coral bleaching"
+# Install frontend dependencies
+cd frontend
+npm install
+cd ..
 ```
 
-### Advanced search
+### Running the Application
+
+**Start both servers** (recommended to run in separate terminals):
 
 ```bash
-# Search with filters
-litsearch search "cancer immunotherapy" \
-    --sources pubmed arxiv crossref \
-    --year-start 2020 \
-    --year-end 2024 \
-    --max-results 100 \
-    --output results.json \
-    --download
+# Terminal 1: Start backend (port 8000)
+cd backend
+uvicorn main:app --reload
+
+# Terminal 2: Start frontend (port 5173)
+cd frontend
+npm run dev
 ```
 
-### Get specific paper
+**Access the application**: Open http://localhost:5173 in your browser
 
-```bash
-# Get by DOI
-litsearch get "10.1038/nature12373"
+## Search Sources
 
-# Get by PubMed ID
-litsearch get "35360497" --source pubmed
+| Source | Coverage | Rate Limit | Auth Required |
+|--------|----------|------------|---------------|
+| PubMed | 35M+ biomedical papers | 3/s | No |
+| arXiv | 2M+ preprints | 1/s | No |
+| Crossref | 150M+ DOI records | 2/s | No |
+| Google Scholar | Citation database | 0.5/s | No |
+| Web of Science | Premium research DB | 0.5/s | UCSB |
+| Semantic Scholar | 200M+ papers with AI | 2/s | No |
+| OpenAlex | 250M+ works | 10/s | No |
 
-# Get by arXiv ID
-litsearch get "2301.08727" --source arxiv
+## Architecture
+
+```
+┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
+│   React Frontend │ ←→  │   FastAPI Backend │ ←→  │   SQLite Database │
+│   (Port 5173)    │     │   (Port 8000)    │     │                 │
+└─────────────────┘     └─────────────────┘     └─────────────────┘
+                               ↓
+                    ┌──────────────────────┐
+                    │   External APIs       │
+                    │   (7 Search Sources)  │
+                    └──────────────────────┘
 ```
 
-### Download PDFs from saved results
+### Tech Stack
 
-```bash
-# Download papers from previous search
-litsearch download results.json --max-papers 50
-```
+**Backend**: Python, FastAPI, SQLAlchemy, SQLite, Pydantic
+**Frontend**: React 19, Vite, React Router, Axios, Recharts, vis-network
+
+## Pages
+
+| Page | Route | Description |
+|------|-------|-------------|
+| Search | `/` | Multi-source search with filters |
+| Library | `/library` | Browse saved papers with full-text search |
+| Paper Detail | `/paper/:id` | Discovery tabs (citations, references, recommendations, network) |
+| Collections | `/collections` | Organize papers into folders |
+| Visualizations | `/visualizations` | Timeline, network, and topic charts |
+| Settings | `/settings` | UCSB authentication setup |
+
+## API Endpoints
+
+The backend exposes 30+ REST endpoints:
+
+- **Search**: `POST /api/search`, `GET /api/search/history`
+- **Papers**: CRUD operations, PDF download, text extraction
+- **Discovery**: Recommendations, citations, references, related papers, network
+- **Collections**: Create, list, add papers
+- **Downloads**: Single and batch PDF download
+- **Visualizations**: Timeline, network, topics
+- **Auth**: UCSB cookie import, status, clear
 
 ## Configuration
 
-Create a `.env` file in the project root (copy from `.env.example`):
+Create a `.env` file in the project root:
 
 ```bash
-# Optional API keys for enhanced features
-ANTHROPIC_API_KEY=your_key_here  # For AI synthesis
-OPENAI_API_KEY=your_key_here     # Alternative to Anthropic
-SERPAPI_KEY=your_key_here        # For Google Scholar (paid)
+# Optional API keys
+ANTHROPIC_API_KEY=      # For AI synthesis
+OPENAI_API_KEY=         # Alternative AI
+SERPAPI_KEY=            # Google Scholar enhancement
+CROSSREF_MAILTO=        # Polite pool access
 
-# Rate limiting (requests per second)
+# Rate limits (requests per second)
 PUBMED_RATE_LIMIT=3
 ARXIV_RATE_LIMIT=1
 CROSSREF_RATE_LIMIT=2
@@ -100,109 +129,118 @@ PAPERS_DIR=./papers
 OUTPUT_DIR=./output
 ```
 
-## Search Sources
+## UCSB Library Access
 
-### Currently Supported
+To access paywalled content through UCSB library:
 
-1. **PubMed**: Biomedical literature via NCBI E-utilities (free, no API key required)
-2. **arXiv**: Preprints in physics, mathematics, computer science, etc. (free)
-3. **Crossref**: DOI registry with broad academic coverage (free)
+1. Log into the UCSB library website in your browser
+2. Export your cookies using a browser extension
+3. Go to Settings page in the app
+4. Upload the cookies file
+5. The app will use these credentials for proxy access
 
-### Coming Soon
+## CLI Usage (Legacy)
 
-- Google Scholar (via scholarly library)
-- Semantic Scholar
-- Web of Science (requires subscription)
-
-## Command Reference
-
-### `search` - Main search command
+The application also includes a CLI for quick searches:
 
 ```bash
-litsearch search QUERY [OPTIONS]
+# Simple search
+litsearch search "CRISPR gene editing"
 
-Options:
-  -s, --sources [pubmed|arxiv|crossref|scholar]  Sources to search
-  -n, --max-results INTEGER                       Maximum results
-  --year-start INTEGER                            Start year filter
-  --year-end INTEGER                              End year filter
-  -o, --output PATH                               Save results to JSON
-  --download/--no-download                        Download PDFs
+# Search with specific sources
+litsearch search "machine learning healthcare" -s pubmed -s arxiv --download
+
+# Quick search
+litsearch quick "coral bleaching"
+
+# Get specific paper by DOI
+litsearch get "10.1038/nature12373"
 ```
 
-### `download` - Download PDFs from results
+## Documentation
+
+- **[Product Requirements Document (PRD)](docs/PRD.md)** - Complete product specifications, features, and technical requirements
+- **[AI Agent Development System](agents/README.md)** - 10 specialized AI agents for developing and improving the application
+
+## Project Structure
+
+```
+litsearchapp/
+├── agents/                  # AI development agents
+│   ├── README.md           # Agent overview and usage
+│   ├── WORKFLOW-INTEGRATION.md
+│   └── agent-*.md          # 10 specialized agents
+├── artifacts/              # Agent outputs (PRDs, plans, etc.)
+├── backend/                 # FastAPI REST API
+│   ├── main.py             # Main application (30+ endpoints)
+│   └── services/           # Business logic
+├── frontend/               # React + Vite application
+│   ├── src/
+│   │   ├── pages/         # 6 main pages
+│   │   ├── components/    # Reusable components
+│   │   ├── services/      # API client
+│   │   └── context/       # Theme provider
+│   └── package.json
+├── src/                    # Core Python library
+│   ├── models.py           # Pydantic data models
+│   ├── search/             # 7 search providers
+│   │   ├── orchestrator.py # Multi-source coordinator
+│   │   ├── pubmed.py
+│   │   ├── arxiv.py
+│   │   ├── crossref.py
+│   │   ├── scholar.py
+│   │   ├── wos.py
+│   │   ├── semantic_scholar.py
+│   │   └── openalex.py
+│   ├── retrieval/          # PDF download
+│   ├── database/           # SQLAlchemy models
+│   └── auth/               # UCSB authentication
+├── database/               # SQLite database
+├── docs/                   # Documentation
+│   └── PRD.md             # Product Requirements
+└── requirements.txt        # Python dependencies
+```
+
+## Development
+
+### Running Tests
 
 ```bash
-litsearch download RESULTS_FILE [OPTIONS]
+# Run backend tests
+pytest tests/ -v
 
-Options:
-  -n, --max-papers INTEGER     Maximum papers to download
-  -c, --concurrent INTEGER     Concurrent downloads
+# Run frontend tests
+cd frontend
+npm test
 ```
 
-### `get` - Get specific paper
+### Building for Production
 
 ```bash
-litsearch get IDENTIFIER [OPTIONS]
-
-Options:
-  -s, --source [pubmed|arxiv|crossref]  Source hint
+# Build frontend
+cd frontend
+npm run build
 ```
 
-### `quick` - Quick search with defaults
+## Roadmap
 
-```bash
-litsearch quick QUERY
-```
+### Current (v1.0)
+- ✅ Multi-source search (7 sources)
+- ✅ Intelligent deduplication
+- ✅ Smart ranking
+- ✅ Discovery features (citations, references, recommendations)
+- ✅ Citation network visualization
+- ✅ UCSB library authentication
+- ✅ Modern React UI with themes
+- ✅ PDF retrieval and extraction
 
-### `config` - Show configuration
-
-```bash
-litsearch config
-```
-
-## Output Format
-
-Search results can be saved as JSON with complete metadata:
-
-```json
-{
-  "query": {
-    "query": "search terms",
-    "sources": ["pubmed", "arxiv"],
-    "max_results": 50
-  },
-  "statistics": {
-    "total_papers": 47,
-    "search_time": 3.24,
-    "avg_citations": 23.5,
-    "papers_by_source": {
-      "pubmed": 30,
-      "arxiv": 17
-    }
-  },
-  "papers": [
-    {
-      "title": "Paper Title",
-      "authors": [...],
-      "year": 2023,
-      "doi": "10.1234/example",
-      "abstract": "...",
-      "citations": 42
-    }
-  ]
-}
-```
-
-## Features in Development
-
+### Future
 - [ ] AI-powered synthesis of search results
-- [ ] Citation network analysis
-- [ ] Google Scholar integration
-- [ ] Export to BibTeX/RIS
-- [ ] Web interface
-- [ ] Saved search alerts
-- [ ] Full-text search in downloaded PDFs
+- [ ] Export to BibTeX/RIS/EndNote
+- [ ] Browser extension
+- [ ] Email alerts for saved searches
+- [ ] Multi-user support
+- [ ] Full-text search within PDFs
 
 ## Contributing
 
@@ -217,4 +255,6 @@ MIT License
 - PubMed E-utilities for biomedical literature access
 - arXiv for open access to scientific preprints
 - Crossref for DOI metadata
+- Semantic Scholar for AI-enhanced paper metadata
+- OpenAlex for open research metadata
 - Unpaywall for open access paper discovery

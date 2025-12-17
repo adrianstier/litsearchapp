@@ -1,19 +1,21 @@
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import {
-  FaSearch, FaBook, FaFolderOpen, FaChartLine, FaCog,
-  FaCheckCircle, FaTimesCircle, FaSun, FaMoon, FaBars, FaTimes
-} from 'react-icons/fa';
+  SearchIcon, BookIcon, FolderIcon, ChartIcon, SettingsIcon,
+  CheckCircleIcon, XCircleIcon, SunIcon, MoonIcon, MenuIcon, CloseIcon
+} from './components/Icons';
 import SearchPage from './pages/SearchPage';
 import LibraryPage from './pages/LibraryPage';
 import CollectionsPage from './pages/CollectionsPage';
 import VisualizationsPage from './pages/VisualizationsPage';
 import SettingsPage from './pages/SettingsPage';
+import PaperDetailPage from './pages/PaperDetailPage';
 import { statsAPI, authAPI } from './services/api';
 import { ThemeProvider, useTheme } from './context/ThemeContext';
 import { ToastProvider } from './components/Toast';
 import { KeyboardShortcutsHelp } from './components/KeyboardShortcutsHelp';
 import './App.css';
+import './professional-enhancements.css';
 
 function NavLink({ to, icon: Icon, children, badge }) {
   const location = useLocation();
@@ -21,7 +23,7 @@ function NavLink({ to, icon: Icon, children, badge }) {
 
   return (
     <Link to={to} className={`nav-link ${isActive ? 'active' : ''}`}>
-      <Icon /> {children}
+      <Icon size={18} /> {children}
       {badge !== undefined && badge > 0 && (
         <span className="badge">{badge}</span>
       )}
@@ -80,7 +82,7 @@ function AppContent() {
         onClick={toggleSidebar}
         aria-label="Toggle sidebar"
       >
-        {sidebarOpen ? <FaTimes /> : <FaBars />}
+        {sidebarOpen ? <CloseIcon size={20} /> : <MenuIcon size={20} />}
       </button>
 
       {/* Sidebar Overlay for Mobile */}
@@ -92,31 +94,31 @@ function AppContent() {
       {/* Sidebar */}
       <nav className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
         <div className="logo">
-          <h1>📚 LitSearch</h1>
+          <h1><span className="logo-icon">LS</span> LitSearch</h1>
           <button
             className="theme-toggle"
             onClick={toggleTheme}
             aria-label="Toggle theme"
             title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
           >
-            {theme === 'light' ? <FaMoon /> : <FaSun />}
+            {theme === 'light' ? <MoonIcon size={16} /> : <SunIcon size={16} />}
           </button>
         </div>
 
         <div className="nav-links">
-          <NavLink to="/" icon={FaSearch}>
+          <NavLink to="/" icon={SearchIcon}>
             Search
           </NavLink>
-          <NavLink to="/library" icon={FaBook} badge={stats?.total_papers}>
+          <NavLink to="/library" icon={BookIcon} badge={stats?.total_papers}>
             Library
           </NavLink>
-          <NavLink to="/collections" icon={FaFolderOpen} badge={stats?.total_collections}>
+          <NavLink to="/collections" icon={FolderIcon} badge={stats?.total_collections}>
             Collections
           </NavLink>
-          <NavLink to="/visualizations" icon={FaChartLine}>
+          <NavLink to="/visualizations" icon={ChartIcon}>
             Visualizations
           </NavLink>
-          <NavLink to="/settings" icon={FaCog}>
+          <NavLink to="/settings" icon={SettingsIcon}>
             Settings
           </NavLink>
         </div>
@@ -126,15 +128,21 @@ function AppContent() {
             <div className={`ucsb-status ${authStatus.authenticated ? 'authenticated' : 'not-authenticated'}`}>
               {authStatus.authenticated ? (
                 <>
-                  <FaCheckCircle className="status-icon" />
+                  <CheckCircleIcon className="status-icon" size={20} />
                   <div className="status-text">
                     <span className="status-title">UCSB Access</span>
-                    <span className="status-subtitle">Enabled</span>
+                    <span className="status-subtitle">
+                      {authStatus.vpn_connected && authStatus.cookie_authenticated
+                        ? 'VPN + Cookies'
+                        : authStatus.vpn_connected
+                        ? 'Via VPN'
+                        : 'Via Cookies'}
+                    </span>
                   </div>
                 </>
               ) : (
                 <>
-                  <FaTimesCircle className="status-icon" />
+                  <XCircleIcon className="status-icon" size={20} />
                   <div className="status-text">
                     <span className="status-title">UCSB Access</span>
                     <span className="status-subtitle">Not configured</span>
@@ -168,6 +176,7 @@ function AppContent() {
         <Routes>
           <Route path="/" element={<SearchPage onStatsUpdate={loadStats} />} />
           <Route path="/library" element={<LibraryPage />} />
+          <Route path="/paper/:id" element={<PaperDetailPage />} />
           <Route path="/collections" element={<CollectionsPage />} />
           <Route path="/visualizations" element={<VisualizationsPage />} />
           <Route path="/settings" element={<SettingsPage />} />

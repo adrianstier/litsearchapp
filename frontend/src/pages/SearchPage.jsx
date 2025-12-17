@@ -9,7 +9,7 @@ import './SearchPage.css';
 
 function SearchPage({ onStatsUpdate }) {
   const [query, setQuery] = useState('');
-  const [sources, setSources] = useState(['pubmed', 'arxiv', 'crossref', 'scholar', 'wos']);
+  const [sources, setSources] = useState(['pubmed', 'arxiv', 'crossref', 'semantic_scholar', 'openalex']);
   const [maxResults, setMaxResults] = useState(20);
   const [yearStart, setYearStart] = useState('');
   const [yearEnd, setYearEnd] = useState('');
@@ -121,7 +121,7 @@ function SearchPage({ onStatsUpdate }) {
     <div className="search-page">
       <div className="search-header">
         <h1>Search Literature</h1>
-        <p>Search across PubMed, arXiv, and Crossref</p>
+        <p>Search across 400M+ papers from multiple sources</p>
       </div>
 
       <form onSubmit={handleSearch} className="search-form">
@@ -174,7 +174,7 @@ function SearchPage({ onStatsUpdate }) {
 
         <div className="search-filters">
           <div className="filter-group">
-            <label>Sources:</label>
+            <label className="filter-label">Sources:</label>
             <div className="checkbox-group">
               <label className="checkbox-label">
                 <input
@@ -182,7 +182,7 @@ function SearchPage({ onStatsUpdate }) {
                   checked={sources.includes('pubmed')}
                   onChange={() => toggleSource('pubmed')}
                 />
-                PubMed
+                <span>PubMed</span>
               </label>
               <label className="checkbox-label">
                 <input
@@ -190,7 +190,7 @@ function SearchPage({ onStatsUpdate }) {
                   checked={sources.includes('arxiv')}
                   onChange={() => toggleSource('arxiv')}
                 />
-                arXiv
+                <span>arXiv</span>
               </label>
               <label className="checkbox-label">
                 <input
@@ -198,7 +198,23 @@ function SearchPage({ onStatsUpdate }) {
                   checked={sources.includes('crossref')}
                   onChange={() => toggleSource('crossref')}
                 />
-                Crossref
+                <span>Crossref</span>
+              </label>
+              <label className="checkbox-label">
+                <input
+                  type="checkbox"
+                  checked={sources.includes('semantic_scholar')}
+                  onChange={() => toggleSource('semantic_scholar')}
+                />
+                <span>Semantic Scholar <span className="new-badge">AI</span></span>
+              </label>
+              <label className="checkbox-label">
+                <input
+                  type="checkbox"
+                  checked={sources.includes('openalex')}
+                  onChange={() => toggleSource('openalex')}
+                />
+                <span>OpenAlex <span className="new-badge">250M</span></span>
               </label>
               <label className="checkbox-label">
                 <input
@@ -206,7 +222,7 @@ function SearchPage({ onStatsUpdate }) {
                   checked={sources.includes('scholar')}
                   onChange={() => toggleSource('scholar')}
                 />
-                Google Scholar
+                <span>Google Scholar <span className="warning-badge">Limited</span></span>
               </label>
               <label className="checkbox-label">
                 <input
@@ -214,7 +230,7 @@ function SearchPage({ onStatsUpdate }) {
                   checked={sources.includes('wos')}
                   onChange={() => toggleSource('wos')}
                 />
-                Web of Science {!ucsbAuthenticated && <span className="ucsb-required">*</span>}
+                <span>Web of Science {!ucsbAuthenticated && <span className="ucsb-required">*</span>}</span>
               </label>
             </div>
             {!ucsbAuthenticated && (
@@ -225,8 +241,8 @@ function SearchPage({ onStatsUpdate }) {
           </div>
 
           <div className="filter-group">
-            <label>Max Results:</label>
-            <select value={maxResults} onChange={(e) => setMaxResults(Number(e.target.value))}>
+            <label className="filter-label">Max Results:</label>
+            <select value={maxResults} onChange={(e) => setMaxResults(Number(e.target.value))} className="form-select">
               <option value={10}>10</option>
               <option value={20}>20</option>
               <option value={50}>50</option>
@@ -235,7 +251,7 @@ function SearchPage({ onStatsUpdate }) {
           </div>
 
           <div className="filter-group">
-            <label>Year Range:</label>
+            <label className="filter-label">Year Range:</label>
             <div className="year-range">
               <input
                 type="number"
@@ -244,7 +260,7 @@ function SearchPage({ onStatsUpdate }) {
                 onChange={(e) => setYearStart(e.target.value)}
                 className="year-input"
               />
-              <span>-</span>
+              <span className="year-separator">-</span>
               <input
                 type="number"
                 placeholder="To"

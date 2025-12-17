@@ -233,6 +233,71 @@ class UCSBAuth:
         except Exception as e:
             print(f"⚠ Failed to clear session: {e}")
 
+    def check_vpn_connection(self) -> bool:
+        """
+        Check if connected to UCSB VPN by testing access to UCSB network
+
+        Returns:
+            True if VPN is connected
+        """
+        try:
+            # Test access to UCSB library proxy - when on VPN, this should respond differently
+            # We'll check if we can reach a UCSB-specific IP range or service
+            test_session = requests.Session()
+            test_session.headers.update({
+                'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36'
+            })
+
+            # Try to access a resource that indicates UCSB network access
+            # The library proxy login page behavior differs when on VPN
+            response = test_session.get(
+                "https://www.library.ucsb.edu/",
+                timeout=5,
+                allow_redirects=True
+            )
+
+            # Check for VPN indicators - when on UCSB network, certain headers or redirects appear
+            # Also check if we can access proxy resources without authentication
+            proxy_test = test_session.get(
+                "https://proxy.library.ucsb.edu/login",
+                timeout=5,
+                allow_redirects=True
+            )
+
+            # When on VPN, the proxy page should show we're already on campus network
+            content = proxy_test.text.lower()
+
+            # Look for indicators that we're on campus/VPN
+            vpn_indicators = [
+                'on campus',
+                'campus network',
+                'already on',
+                'no proxy needed',
+                'direct access'
+            ]
+
+            for indicator in vpn_indicators:
+                if indicator in content:
+                    return True
+
+            # Alternative check: see if our IP is in UCSB range
+            # UCSB IP ranges typically start with 128.111.x.x or 169.231.x.x
+            try:
+                ip_response = test_session.get("https://api.ipify.org?format=json", timeout=5)
+                ip_data = ip_response.json()
+                ip = ip_data.get('ip', '')
+
+                if ip.startswith('128.111.') or ip.startswith('169.231.'):
+                    return True
+            except:
+                pass
+
+            return False
+
+        except Exception as e:
+            print(f"⚠ VPN check failed: {e}")
+            return False
+
     def get_status(self) -> dict:
         """
         Get authentication status
@@ -240,16 +305,29 @@ class UCSBAuth:
         Returns:
             Dictionary with status information
         """
+        # Check VPN connection
+        vpn_connected = self.check_vpn_connection()
+
         status = {
-            'authenticated': self.is_authenticated,
+            'authenticated': self.is_authenticated or vpn_connected,
+            'cookie_authenticated': self.is_authenticated,
+            'vpn_connected': vpn_connected,
             'session_file_exists': self.session_file.exists(),
             'cookies_count': len(self.session.cookies),
             'config_dir': str(self.config_dir)
         }
 
-        if self.is_authenticated:
-            status['message'] = "✓ Authenticated with UCSB library"
+        if vpn_connected and self.is_authenticated:
+            status['message'] = "✓ VPN connected & cookies imported - Full access enabled"
+            status['access_method'] = 'both'
+        elif vpn_connected:
+            status['message'] = "✓ Connected via UCSB VPN - Institutional access enabled"
+            status['access_method'] = 'vpn'
+        elif self.is_authenticated:
+            status['message'] = "✓ Authenticated with cookies - Institutional access enabled"
+            status['access_method'] = 'cookies'
         else:
-            status['message'] = "✗ Not authenticated - import cookies to enable institutional access"
+            status['message'] = "✗ Not authenticated - Use VPN or import cookies for institutional access"
+            status['access_method'] = 'none'
 
         return status

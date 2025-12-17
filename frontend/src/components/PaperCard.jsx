@@ -1,8 +1,9 @@
 import { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   FaFileAlt, FaDownload, FaExternalLinkAlt, FaQuoteLeft,
   FaCheckCircle, FaSpinner, FaBookmark, FaRegBookmark,
-  FaShareAlt, FaCopy, FaChevronDown, FaChevronUp, FaEllipsisV
+  FaShareAlt, FaCopy, FaChevronDown, FaChevronUp, FaEllipsisV, FaEye
 } from 'react-icons/fa';
 import { downloadAPI } from '../services/api';
 import { useClickOutside } from '../hooks/useKeyboardShortcuts';
@@ -10,6 +11,7 @@ import { useToast } from './Toast';
 import './PaperCard.css';
 
 function PaperCard({ paper, ucsbAuthenticated }) {
+  const navigate = useNavigate();
   const [downloading, setDownloading] = useState(false);
   const [downloadStatus, setDownloadStatus] = useState(null);
   const [isBookmarked, setIsBookmarked] = useState(false);
@@ -194,6 +196,13 @@ function PaperCard({ paper, ucsbAuthenticated }) {
       )}
 
       <div className="paper-actions">
+        <button
+          onClick={() => navigate(`/paper/${paper.id}`)}
+          className="btn-view-details"
+          title="View paper details and discovery features"
+        >
+          <FaEye /> View Details
+        </button>
         <button
           onClick={handleDownload}
           className={`btn-download ${downloading ? 'downloading' : ''} ${ucsbAuthenticated ? 'ucsb-enabled' : ''}`}

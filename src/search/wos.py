@@ -73,7 +73,7 @@ class WebOfScienceProvider(BaseSearchProvider):
                 search_params['edition'] = 'SCI'
 
             # Make request with rate limiting
-            self.rate_limiter.wait()
+            self.rate_limiter.wait_if_needed()
 
             # First, access the search page to get session
             response = self.session.get(self.search_url, timeout=15)
@@ -111,7 +111,7 @@ class WebOfScienceProvider(BaseSearchProvider):
                 f"{search_term}/relevance/1"
             )
 
-            self.rate_limiter.wait()
+            self.rate_limiter.wait_if_needed()
             response = self.session.get(wos_search_url, timeout=15, allow_redirects=True)
 
             if response.status_code == 200:
@@ -250,7 +250,7 @@ class WebOfScienceProvider(BaseSearchProvider):
             # Construct URL for specific record
             record_url = f"{self.base_url}/wos/woscc/full-record/{paper_id}"
 
-            self.rate_limiter.wait()
+            self.rate_limiter.wait_if_needed()
             response = self.session.get(record_url, timeout=15)
 
             if response.status_code == 200:

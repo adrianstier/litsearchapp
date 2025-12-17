@@ -5,6 +5,7 @@ from typing import List, Optional
 import requests
 from bs4 import BeautifulSoup
 import time
+import random
 from urllib.parse import quote_plus
 
 from src.models import Paper, SearchQuery, Source, Author, PaperType
@@ -25,19 +26,40 @@ class GoogleScholarProvider(BaseSearchProvider):
         super().__init__(rate_limit)
         self.source = Source.GOOGLE_SCHOLAR
         self.session = ucsb_session if ucsb_session else requests.Session()
+
+        # Enhanced user-agent rotation
+        self.user_agents = [
+            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+            'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+            'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:121.0) Gecko/20100101 Firefox/121.0',
+            'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.1 Safari/605.1.15',
+            'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36 Edg/119.0.0.0'
+        ]
+
+        self._rotate_user_agent()
+
         self.session.headers.update({
-            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36',
-            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-            'Accept-Language': 'en-US,en;q=0.5',
-            'Accept-Encoding': 'gzip, deflate',
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+            'Accept-Language': 'en-US,en;q=0.9',
+            'Accept-Encoding': 'gzip, deflate, br',
             'Connection': 'keep-alive',
+            'Upgrade-Insecure-Requests': '1',
+            'Sec-Fetch-Dest': 'document',
+            'Sec-Fetch-Mode': 'navigate',
+            'Sec-Fetch-Site': 'none',
+            'Cache-Control': 'max-age=0'
         })
         self.base_url = "https://scholar.google.com/scholar"
         self.ucsb_proxy = "https://scholar-google-com.proxy.library.ucsb.edu/scholar"
 
+    def _rotate_user_agent(self):
+        """Rotate to a random user agent"""
+        self.session.headers['User-Agent'] = random.choice(self.user_agents)
+
     def search(self, query: SearchQuery) -> List[Paper]:
         """
-        Search Google Scholar
+        Search Google Scholar with exponential backoff
 
         Args:
             query: Search query parameters
@@ -46,6 +68,7 @@ class GoogleScholarProvider(BaseSearchProvider):
             List of papers
         """
         papers = []
+        max_retries = 3
 
         try:
             # Use UCSB proxy if session available
@@ -67,15 +90,73 @@ class GoogleScholarProvider(BaseSearchProvider):
             # Limit results
             num_results = min(query.max_results, 20)  # Scholar limits results per page
 
-            # Make request with rate limiting
-            self.rate_limiter.wait()
-            response = self.session.get(search_url, params=params, timeout=15)
-            response.raise_for_status()
+            # Try with exponential backoff
+            for attempt in range(max_retries):
+                try:
+                    # Rotate user agent for each attempt
+                    self._rotate_user_agent()
 
-            # Parse results
-            papers = self._parse_results(response.text, limit=num_results)
+                    # Add randomized delay (jitter) to avoid detection patterns
+                    jitter = random.uniform(0.5, 1.5)
+                    self.rate_limiter.wait_if_needed()
+                    time.sleep(jitter)
 
-            print(f"✓ Google Scholar: Found {len(papers)} papers")
+                    # Make request
+                    response = self.session.get(search_url, params=params, timeout=15)
+
+                    # Handle different response codes
+                    if response.status_code == 200:
+                        # Success - parse results
+                        papers = self._parse_results(response.text, limit=num_results)
+                        print(f"✓ Google Scholar: Found {len(papers)} papers")
+                        return papers
+
+                    elif response.status_code == 429:
+                        # Rate limited - check Retry-After header
+                        retry_after = response.headers.get('Retry-After')
+
+                        if retry_after:
+                            # Server told us how long to wait
+                            wait_time = int(retry_after)
+                            print(f"⚠ Google Scholar rate limited. Retry-After: {wait_time}s")
+                        else:
+                            # Use exponential backoff
+                            wait_time = (2 ** attempt) * 2  # 2s, 4s, 8s
+                            print(f"⚠ Google Scholar rate limited. Waiting {wait_time}s (attempt {attempt + 1}/{max_retries})")
+
+                        if attempt < max_retries - 1:
+                            time.sleep(wait_time)
+                            continue
+                        else:
+                            print(f"✗ Google Scholar: Max retries reached after rate limiting")
+                            return []
+
+                    else:
+                        # Other error
+                        print(f"⚠ Google Scholar returned status {response.status_code}")
+                        response.raise_for_status()
+
+                except requests.exceptions.HTTPError as e:
+                    if e.response.status_code == 429 and attempt < max_retries - 1:
+                        # Retry on 429
+                        wait_time = (2 ** attempt) * 2
+                        print(f"⚠ Rate limited (HTTP 429). Waiting {wait_time}s...")
+                        time.sleep(wait_time)
+                        continue
+                    elif attempt == max_retries - 1:
+                        print(f"✗ Google Scholar: Max retries reached. Error: {e}")
+                        return []
+                    else:
+                        raise
+
+                except requests.exceptions.RequestException as e:
+                    if attempt < max_retries - 1:
+                        wait_time = (2 ** attempt)
+                        print(f"⚠ Request error: {e}. Retrying in {wait_time}s...")
+                        time.sleep(wait_time)
+                        continue
+                    else:
+                        raise
 
         except Exception as e:
             print(f"✗ Google Scholar search failed: {e}")

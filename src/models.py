@@ -14,6 +14,7 @@ class Source(str, Enum):
     GOOGLE_SCHOLAR = "scholar"
     WEB_OF_SCIENCE = "wos"
     SEMANTIC_SCHOLAR = "semantic_scholar"
+    OPENALEX = "openalex"
     PMC = "pmc"
 
 

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { FaSearch, FaSpinner } from 'react-icons/fa';
+import { SearchIcon, SpinnerIcon } from '../components/Icons';
 import { papersAPI, authAPI } from '../services/api';
 import PaperCard from '../components/PaperCard';
 import './LibraryPage.css';
@@ -61,7 +61,15 @@ function LibraryPage() {
   return (
     <div className="library-page">
       <div className="page-header">
-        <h1>📚 Paper Library</h1>
+        <div className="page-title">
+          <div className="page-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+            </svg>
+          </div>
+          <h1>Paper Library</h1>
+        </div>
         <p>Browse and search your saved papers</p>
       </div>
 
@@ -75,14 +83,14 @@ function LibraryPage() {
             className="search-input"
           />
           <button type="submit" className="search-btn">
-            <FaSearch /> Search
+            <SearchIcon size={16} /> Search
           </button>
         </form>
       </div>
 
       {loading ? (
         <div className="loading">
-          <FaSpinner className="spinner" size={48} />
+          <SpinnerIcon size={48} />
           <p>Loading papers...</p>
         </div>
       ) : (

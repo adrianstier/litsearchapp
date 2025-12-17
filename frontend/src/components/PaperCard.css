@@ -1,220 +1,425 @@
-/* PaperCard.css - Enhanced Features */
+/**
+ * PaperCard Component Styles
+ * Scientific Illustration - Specimen Label Design
+ */
 
-/* Paper Title Row with Quick Actions */
+/* ===== PAPER CARD BASE - Specimen label style ===== */
+.paper-card {
+  background: var(--color-surface);
+  border-radius: var(--radius-sm);
+  padding: var(--space-5);
+  box-shadow: var(--shadow-card);
+  border: 1px solid var(--color-border);
+  transition: all var(--transition-fast);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  position: relative;
+}
+
+.paper-card:hover {
+  box-shadow: var(--shadow-card-hover);
+  border-color: var(--color-secondary-light);
+}
+
+/* ===== PAPER HEADER ===== */
+.paper-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
 .paper-title-row {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 1rem;
-  margin-bottom: 1rem;
+  gap: var(--space-3);
 }
 
+.paper-title {
+  flex: 1;
+  font-size: var(--text-base);
+  font-weight: var(--font-semibold);
+  color: var(--color-text-primary);
+  line-height: var(--leading-snug);
+  margin: 0;
+  cursor: pointer;
+  transition: color var(--transition-fast);
+}
+
+.paper-title:hover {
+  color: var(--color-primary);
+}
+
+/* ===== QUICK ACTIONS MENU ===== */
 .paper-quick-actions {
   position: relative;
   flex-shrink: 0;
 }
 
 .quick-action-toggle {
-  background: var(--bg-tertiary);
-  border: 2px solid var(--border-primary);
-  border-radius: 0.5rem;
-  padding: 0.5rem;
+  background: var(--color-fill-tertiary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-2);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s ease;
-  color: var(--text-secondary);
+  transition: all var(--transition-fast);
+  color: var(--color-text-secondary);
+  width: 28px;
+  height: 28px;
 }
 
 .quick-action-toggle:hover {
-  background: var(--bg-hover);
-  border-color: var(--primary);
-  color: var(--primary);
-  transform: scale(1.05);
+  background: var(--color-fill-secondary);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.quick-action-toggle:active {
+  transform: scale(0.95);
 }
 
 .quick-actions-menu {
   position: absolute;
-  top: 100%;
+  top: calc(100% + var(--space-2));
   right: 0;
-  margin-top: 0.5rem;
-  background: var(--card-bg);
-  border: 2px solid var(--border-primary);
-  border-radius: 0.75rem;
-  box-shadow: var(--shadow-xl);
-  z-index: 10;
-  min-width: 200px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-floating);
+  z-index: var(--z-dropdown);
+  min-width: 180px;
   overflow: hidden;
-  animation: menu-slide-in 0.2s ease;
-}
-
-@keyframes menu-slide-in {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  animation: fadeIn var(--transition-fast) ease-out;
 }
 
 .quick-action-item {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 0.875rem 1.25rem;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
   border: none;
   background: none;
-  color: var(--text-primary);
+  color: var(--color-text-primary);
   cursor: pointer;
   width: 100%;
   text-align: left;
-  font-weight: 500;
-  font-size: 0.9375rem;
-  transition: all 0.2s ease;
-  border-bottom: 1px solid var(--border-primary);
-}
-
-.quick-action-item:last-child {
-  border-bottom: none;
+  font-weight: var(--font-medium);
+  font-size: var(--text-sm);
+  transition: all var(--transition-fast);
+  font-family: inherit;
 }
 
 .quick-action-item:hover {
-  background: var(--bg-secondary);
-  color: var(--primary);
+  background: var(--color-fill-tertiary);
+  color: var(--color-primary);
+}
+
+.quick-action-item:active {
+  background: var(--color-fill-secondary);
 }
 
 .quick-action-item svg {
-  font-size: 1rem;
+  font-size: var(--text-sm);
+  flex-shrink: 0;
 }
 
-/* Enhanced Abstract with Toggle */
+/* ===== SOURCE BADGES - Classification labels ===== */
+.paper-sources {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.source-badge {
+  padding: 3px var(--space-2);
+  border-radius: var(--radius-sm);
+  font-size: 10px;
+  font-weight: var(--font-semibold);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+  transition: all var(--transition-fast);
+  border: 1px solid;
+}
+
+/* Source-specific colors - Vintage ink style */
+.source-badge.pubmed,
+.source-badge.PubMed {
+  background: var(--color-success-bg);
+  color: var(--color-success);
+  border-color: var(--color-success);
+}
+
+.source-badge.arxiv,
+.source-badge.arXiv {
+  background: var(--color-error-bg);
+  color: var(--color-error);
+  border-color: var(--color-error);
+}
+
+.source-badge.crossref,
+.source-badge.Crossref {
+  background: var(--color-info-bg);
+  color: var(--color-info);
+  border-color: var(--color-info);
+}
+
+.source-badge.semantic,
+.source-badge["Semantic Scholar"] {
+  background: var(--color-primary-100);
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.source-badge.openalex,
+.source-badge.OpenAlex {
+  background: var(--color-warning-bg);
+  color: var(--color-warning);
+  border-color: var(--color-warning);
+}
+
+.source-badge:hover {
+  transform: scale(1.02);
+}
+
+/* ===== AUTHORS ===== */
+.paper-authors {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  font-weight: var(--font-regular);
+  line-height: var(--leading-normal);
+  font-style: italic;
+}
+
+.no-authors {
+  font-style: italic;
+  color: var(--color-text-tertiary);
+}
+
+/* ===== ABSTRACT ===== */
+.paper-abstract {
+  padding: var(--space-3);
+  background: var(--color-fill-tertiary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  line-height: var(--leading-relaxed);
+}
+
+.paper-abstract p {
+  margin: 0;
+}
+
 .abstract-toggle {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--space-2);
   background: none;
   border: none;
-  color: var(--primary);
+  color: var(--color-primary);
   cursor: pointer;
-  font-weight: 600;
-  font-size: 0.875rem;
-  margin-top: 0.75rem;
-  padding: 0.5rem 0;
-  transition: all 0.2s ease;
+  font-weight: var(--font-medium);
+  font-size: var(--text-sm);
+  margin-top: var(--space-2);
+  padding: var(--space-1) 0;
+  transition: all var(--transition-fast);
+  font-family: inherit;
 }
 
 .abstract-toggle:hover {
-  color: var(--primary-dark);
-  transform: translateX(4px);
+  opacity: 0.8;
 }
 
 .abstract-toggle svg {
-  font-size: 0.75rem;
+  font-size: var(--text-xs);
 }
 
-/* Enhanced DOI with Copy Button */
-.paper-doi {
-  font-size: 0.8125rem;
-  color: var(--gray-500);
-  margin: 0.75rem 0;
-  word-break: break-all;
-  padding: 0.75rem 1rem;
-  background: var(--gray-50);
-  border-radius: 0.5rem;
-  font-family: 'Monaco', 'Courier New', monospace;
+/* ===== METADATA ===== */
+.paper-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  font-size: var(--text-xs);
+  color: var(--color-text-secondary);
+}
+
+.paper-meta span {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  flex-wrap: wrap;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-2);
+  background: var(--color-fill-tertiary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-weight: var(--font-medium);
+}
+
+/* ===== DOI - Catalog number style ===== */
+.paper-doi {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-fill-tertiary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 10px;
+}
+
+.paper-doi strong {
+  color: var(--color-secondary);
+  font-weight: var(--font-semibold);
 }
 
 .doi-text {
   flex: 1;
-  min-width: 0;
+  color: var(--color-text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .doi-copy-btn {
-  background: var(--primary);
-  color: white;
-  border: none;
-  border-radius: 0.375rem;
-  padding: 0.5rem;
+  background: var(--color-primary-100);
+  border: 1px solid var(--color-primary);
+  border-radius: var(--radius-sm);
+  padding: var(--space-1);
   cursor: pointer;
+  color: var(--color-primary);
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s ease;
+  transition: all var(--transition-fast);
   flex-shrink: 0;
 }
 
 .doi-copy-btn:hover {
-  background: var(--primary-dark);
-  transform: scale(1.1);
+  background: var(--color-primary);
+  color: white;
 }
 
-.doi-copy-btn svg {
-  font-size: 0.875rem;
+.doi-copy-btn:active {
+  transform: scale(0.95);
 }
 
-/* Download Status Messages */
+/* ===== DOWNLOAD STATUS ===== */
 .download-status {
-  padding: 0.75rem 1rem;
-  border-radius: 0.5rem;
-  margin: 1rem 0;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  font-weight: 600;
-  font-size: 0.9375rem;
-  animation: slideDown 0.3s ease-out;
-}
-
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-xs);
+  font-weight: var(--font-medium);
+  animation: fadeIn var(--transition-fast) ease-out;
+  border: 1px solid;
 }
 
 .download-status.success {
-  background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(16, 185, 129, 0.08) 100%);
-  color: var(--success);
-  border: 2px solid var(--success);
-  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+  background: var(--color-success-bg);
+  color: var(--color-success);
+  border-color: var(--color-success);
 }
 
 .download-status.error {
-  background: linear-gradient(135deg, rgba(239, 68, 68, 0.15) 0%, rgba(239, 68, 68, 0.08) 100%);
-  color: var(--danger);
-  border: 2px solid var(--danger);
-  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+  background: var(--color-error-bg);
+  color: var(--color-error);
+  border-color: var(--color-error);
 }
 
 .download-status svg {
-  font-size: 1.125rem;
+  flex-shrink: 0;
+  font-size: var(--text-sm);
 }
 
-/* Enhanced Download Button */
+/* ===== ACTION BUTTONS ===== */
+.paper-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-separator);
+}
+
+/* Primary button - View Details */
+.btn-view-details {
+  flex: 1;
+  min-width: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  background: var(--color-primary);
+  color: white;
+  border: 1px solid var(--color-primary-dark);
+  border-radius: var(--radius-sm);
+  font-weight: var(--font-semibold);
+  font-size: var(--text-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  font-family: inherit;
+  letter-spacing: var(--tracking-wide);
+}
+
+.btn-view-details:hover {
+  background: var(--color-primary-dark);
+}
+
+.btn-view-details:active {
+  transform: scale(0.98);
+}
+
+.btn-view-details svg {
+  font-size: var(--text-sm);
+}
+
+/* Download button */
+.btn-download {
+  flex: 1;
+  min-width: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  background: var(--color-success);
+  color: white;
+  border: 1px solid var(--color-success);
+  border-radius: var(--radius-sm);
+  font-weight: var(--font-semibold);
+  font-size: var(--text-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  font-family: inherit;
+  letter-spacing: var(--tracking-wide);
+}
+
+.btn-download:hover:not(:disabled) {
+  filter: brightness(1.1);
+}
+
+.btn-download:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
 .btn-download.downloading {
-  background: linear-gradient(135deg, var(--gray-400) 0%, var(--gray-500) 100%);
+  background: var(--color-text-tertiary);
+  border-color: var(--color-text-tertiary);
   cursor: not-allowed;
-  opacity: 0.7;
 }
 
 .btn-download.ucsb-enabled {
-  background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
-  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+  background: var(--color-success);
 }
 
-.btn-download.ucsb-enabled:hover {
-  box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
+.btn-download svg {
+  font-size: var(--text-sm);
 }
 
 .btn-download .spinner {
@@ -222,32 +427,113 @@
 }
 
 @keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
-/* UCSB Access Notice */
+/* External link buttons */
+.btn-external,
+.btn-pdf {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-fill-tertiary);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-weight: var(--font-medium);
+  font-size: var(--text-sm);
+  text-decoration: none;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  font-family: inherit;
+}
+
+.btn-external:hover,
+.btn-pdf:hover {
+  background: var(--color-fill-secondary);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.btn-external:active,
+.btn-pdf:active {
+  transform: scale(0.98);
+}
+
+.btn-external svg,
+.btn-pdf svg {
+  font-size: var(--text-sm);
+}
+
+/* ===== UCSB ACCESS NOTICE ===== */
 .ucsb-access-notice {
-  margin-top: 1rem;
-  padding: 0.75rem 1rem;
-  background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(16, 185, 129, 0.05) 100%);
-  border-left: 4px solid var(--success);
-  border-radius: 0.5rem;
-  font-size: 0.875rem;
-  color: var(--gray-700);
-  font-weight: 500;
-  animation: fadeIn 0.5s ease-out;
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-success-bg);
+  border: 1px solid var(--color-success);
+  border-radius: var(--radius-sm);
+  font-size: 10px;
+  font-weight: var(--font-medium);
+  color: var(--color-success);
+  text-align: center;
+  animation: fadeIn var(--transition-fast) ease-out;
 }
 
+/* ===== ANIMATIONS ===== */
 @keyframes fadeIn {
   from {
     opacity: 0;
   }
   to {
     opacity: 1;
+  }
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 768px) {
+  .paper-card {
+    padding: var(--space-4);
+    gap: var(--space-3);
+  }
+
+  .paper-title {
+    font-size: var(--text-sm);
+  }
+
+  .paper-abstract {
+    padding: var(--space-2);
+  }
+
+  .paper-actions {
+    flex-direction: column;
+  }
+
+  .btn-view-details,
+  .btn-download,
+  .btn-external,
+  .btn-pdf {
+    width: 100%;
+    min-width: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .paper-card {
+    padding: var(--space-3);
+  }
+
+  .paper-title-row {
+    gap: var(--space-2);
+  }
+
+  .paper-meta {
+    gap: var(--space-1);
+  }
+
+  .paper-meta span {
+    font-size: 10px;
+    padding: 2px var(--space-1);
   }
 }

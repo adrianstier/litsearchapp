@@ -1,0 +1,277 @@
+/**
+ * LitSearch Design System
+ * Scientific Illustration Theme - Vintage Academia
+ * Sepia ink, museum blue, botanical diagrams
+ */
+
+/* ===== IMPORT FONTS ===== */
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+/* ===== BASE RESET ===== */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* ===== SCIENTIFIC ILLUSTRATION COLOR PALETTE ===== */
+
+  /* Primary Colors - Museum Blue */
+  --color-primary: #4A6B7C;           /* Museum blue */
+  --color-primary-dark: #3A5666;      /* Darker museum blue */
+  --color-primary-light: #6B8A9C;     /* Lighter museum blue */
+  --color-primary-100: rgba(74, 107, 124, 0.12);
+  --color-primary-200: rgba(74, 107, 124, 0.24);
+  --color-primary-50: rgba(74, 107, 124, 0.06);
+
+  /* Secondary - Sepia Ink */
+  --color-secondary: #6B4423;         /* Sepia ink */
+  --color-secondary-dark: #523318;    /* Dark sepia */
+  --color-secondary-light: #8B6243;   /* Light sepia */
+  --color-secondary-50: rgba(107, 68, 35, 0.06);
+  --color-secondary-100: rgba(107, 68, 35, 0.12);
+
+  /* Accent - Oxidized Copper (for citations/connections) */
+  --color-accent: #7C9885;            /* Oxidized copper */
+  --color-accent-dark: #5C7865;       /* Dark copper */
+  --color-accent-light: #9CB8A5;      /* Light copper */
+  --color-accent-100: rgba(124, 152, 133, 0.15);
+
+  /* Semantic Colors */
+  --color-success: #5A7C65;           /* Botanical green */
+  --color-success-bg: rgba(90, 124, 101, 0.12);
+  --color-error: #8B4C4C;             /* Aged red ink */
+  --color-error-bg: rgba(139, 76, 76, 0.12);
+  --color-warning: #9C7B4A;           /* Amber */
+  --color-warning-bg: rgba(156, 123, 74, 0.12);
+  --color-info: #4A6B7C;              /* Museum blue */
+  --color-info-bg: rgba(74, 107, 124, 0.12);
+
+  /* Light Mode - Aged Paper */
+  --color-bg-primary: #F9F6F0;        /* Aged paper */
+  --color-bg-secondary: #F3EDE3;      /* Darker aged paper */
+  --color-bg-tertiary: #EDE5D8;       /* Even darker */
+  --color-surface: #FFFCF7;           /* Clean paper surface */
+  --color-surface-elevated: #FFFFFF;  /* Elevated surface */
+
+  /* Text Colors - Slate */
+  --color-text-primary: #3B4045;      /* Slate */
+  --color-text-secondary: #5C6166;    /* Medium slate */
+  --color-text-tertiary: #7D8287;     /* Light slate */
+
+  /* Borders & Separators - Ink line style */
+  --color-border: #D4C9B8;            /* Aged border */
+  --color-border-light: #E5DDD0;      /* Light border */
+  --color-separator: #D4C9B8;         /* Separator line */
+
+  /* Fills - Parchment textures */
+  --color-fill-primary: rgba(107, 68, 35, 0.08);
+  --color-fill-secondary: rgba(107, 68, 35, 0.05);
+  --color-fill-tertiary: rgba(107, 68, 35, 0.03);
+
+  /* ===== TYPOGRAPHY - Classical Serif ===== */
+  --font-serif: 'EB Garamond', 'Georgia', 'Times New Roman', serif;
+  --font-sans: 'EB Garamond', 'Georgia', serif;
+  --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+
+  /* Font Sizes */
+  --text-xs: 0.75rem;      /* 12px */
+  --text-sm: 0.875rem;     /* 14px */
+  --text-base: 1rem;       /* 16px */
+  --text-lg: 1.125rem;     /* 18px */
+  --text-xl: 1.25rem;      /* 20px */
+  --text-2xl: 1.5rem;      /* 24px */
+  --text-3xl: 1.875rem;    /* 30px */
+  --text-4xl: 2.25rem;     /* 36px */
+
+  /* Font Weights */
+  --font-regular: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+
+  /* Line Heights */
+  --leading-none: 1;
+  --leading-tight: 1.25;
+  --leading-snug: 1.375;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.625;
+  --leading-loose: 2;
+
+  /* Letter Spacing */
+  --tracking-tight: -0.015em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.025em;
+  --tracking-wider: 0.05em;
+
+  /* ===== SPACING ===== */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+
+  /* ===== BORDERS - Specimen Label Style ===== */
+  --radius-none: 0;
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 6px;
+  --radius-xl: 8px;
+  --radius-2xl: 12px;
+  --radius-full: 9999px;
+
+  /* ===== SHADOWS - Ink wash effects ===== */
+  --shadow-sm: 0 1px 2px rgba(59, 64, 69, 0.06);
+  --shadow-md: 0 2px 4px rgba(59, 64, 69, 0.08), 0 1px 2px rgba(59, 64, 69, 0.04);
+  --shadow-lg: 0 4px 8px rgba(59, 64, 69, 0.08), 0 2px 4px rgba(59, 64, 69, 0.04);
+  --shadow-xl: 0 8px 16px rgba(59, 64, 69, 0.08), 0 4px 8px rgba(59, 64, 69, 0.04);
+
+  /* Card shadows */
+  --shadow-card: 0 1px 3px rgba(107, 68, 35, 0.06), 0 2px 6px rgba(107, 68, 35, 0.04);
+  --shadow-card-hover: 0 4px 12px rgba(107, 68, 35, 0.1), 0 2px 4px rgba(107, 68, 35, 0.06);
+  --shadow-floating: 0 8px 24px rgba(59, 64, 69, 0.12), 0 4px 8px rgba(59, 64, 69, 0.08);
+
+  /* ===== TRANSITIONS ===== */
+  --transition-fast: 150ms ease;
+  --transition-base: 200ms ease;
+  --transition-slow: 300ms ease;
+
+  /* ===== Z-INDEX ===== */
+  --z-base: 0;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-fixed: 300;
+  --z-modal: 400;
+  --z-toast: 500;
+
+  /* ===== LAYOUT ===== */
+  --sidebar-width: 260px;
+  --header-height: 64px;
+  --max-width: 1200px;
+}
+
+/* ===== DARK MODE - Aged leather ===== */
+[data-theme="dark"] {
+  --color-bg-primary: #2A2520;
+  --color-bg-secondary: #342E28;
+  --color-bg-tertiary: #3E3630;
+  --color-surface: #3E3630;
+  --color-surface-elevated: #4A423A;
+
+  --color-text-primary: #F0E8DC;
+  --color-text-secondary: #C8BCA8;
+  --color-text-tertiary: #9C9080;
+
+  --color-border: #5C5248;
+  --color-border-light: #4A423A;
+  --color-separator: #5C5248;
+
+  --color-fill-primary: rgba(240, 232, 220, 0.12);
+  --color-fill-secondary: rgba(240, 232, 220, 0.08);
+  --color-fill-tertiary: rgba(240, 232, 220, 0.04);
+
+  --color-primary: #7C9CAC;
+  --color-primary-dark: #6B8A9C;
+  --color-primary-light: #9CBCCC;
+  --color-primary-100: rgba(124, 156, 172, 0.15);
+  --color-primary-200: rgba(124, 156, 172, 0.25);
+
+  --color-secondary: #A87C53;
+  --color-secondary-dark: #8B6243;
+  --color-secondary-light: #C89C73;
+
+  --color-accent: #9CB8A5;
+
+  --color-success: #7C9885;
+  --color-error: #B87C7C;
+  --color-warning: #C8A87C;
+}
+
+/* ===== BASE STYLES ===== */
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-serif);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-primary);
+  /* Subtle parchment texture */
+  background-image:
+    radial-gradient(ellipse at 50% 0%, rgba(107, 68, 35, 0.03) 0%, transparent 50%),
+    radial-gradient(ellipse at 100% 100%, rgba(74, 107, 124, 0.02) 0%, transparent 40%);
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* ===== SELECTION ===== */
+::selection {
+  background: var(--color-secondary-100);
+  color: var(--color-text-primary);
+}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: var(--radius-sm);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-secondary-light);
+}
+
+/* ===== FOCUS STYLES ===== */
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== ACCESSIBILITY ===== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

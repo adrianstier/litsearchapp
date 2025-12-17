@@ -1,0 +1,246 @@
+/**
+ * AI Features Panel Styles
+ * Scientific Illustration Theme
+ */
+
+.ai-features-panel {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+}
+
+.ai-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-4);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.ai-panel-header h3 {
+  font-size: var(--text-lg);
+  font-weight: var(--font-semibold);
+  color: var(--color-secondary);
+  margin: 0;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: var(--text-xl);
+  color: var(--color-text-tertiary);
+  cursor: pointer;
+  padding: var(--space-1);
+  line-height: 1;
+}
+
+.close-button:hover {
+  color: var(--color-text-primary);
+}
+
+/* Tabs */
+.ai-tabs {
+  display: flex;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: var(--space-2);
+}
+
+.ai-tab {
+  background: none;
+  border: none;
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--text-sm);
+  font-family: var(--font-serif);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+}
+
+.ai-tab:hover {
+  background: var(--color-fill-tertiary);
+  color: var(--color-text-primary);
+}
+
+.ai-tab.active {
+  background: var(--color-primary-100);
+  color: var(--color-primary);
+  font-weight: var(--font-semibold);
+}
+
+/* Content */
+.ai-content {
+  min-height: 200px;
+}
+
+.ai-section {
+  padding: var(--space-3) 0;
+}
+
+.section-description {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-4);
+  line-height: var(--leading-relaxed);
+}
+
+/* Action Button */
+.ai-action-button {
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  padding: var(--space-3) var(--space-5);
+  font-size: var(--text-sm);
+  font-family: var(--font-serif);
+  font-weight: var(--font-semibold);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.ai-action-button:hover:not(:disabled) {
+  background: var(--color-primary-dark);
+}
+
+.ai-action-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Error */
+.ai-error {
+  background: var(--color-error-bg);
+  border: 1px solid var(--color-error);
+  color: var(--color-error);
+  padding: var(--space-3);
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--space-4);
+  font-size: var(--text-sm);
+}
+
+/* Results */
+.ai-result {
+  background: var(--color-fill-tertiary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-4);
+  margin-top: var(--space-4);
+}
+
+.ai-result h4 {
+  font-size: var(--text-base);
+  font-weight: var(--font-semibold);
+  color: var(--color-secondary);
+  margin: 0 0 var(--space-3) 0;
+}
+
+/* Summary Result */
+.summary-result p {
+  font-size: var(--text-sm);
+  color: var(--color-text-primary);
+  line-height: var(--leading-relaxed);
+}
+
+/* Field Selector */
+.field-selector {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+.field-checkbox {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+}
+
+.field-checkbox input {
+  accent-color: var(--color-primary);
+}
+
+.field-checkbox span {
+  text-transform: capitalize;
+}
+
+/* Extraction Table */
+.extraction-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.extraction-table td {
+  padding: var(--space-2);
+  border-bottom: 1px solid var(--color-border);
+  font-size: var(--text-sm);
+}
+
+.extraction-table .field-name {
+  font-weight: var(--font-semibold);
+  color: var(--color-secondary);
+  text-transform: capitalize;
+  width: 30%;
+}
+
+.extraction-table .field-value {
+  color: var(--color-text-primary);
+}
+
+/* Similar Papers List */
+.similar-papers-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.similar-papers-list li {
+  padding: var(--space-3);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.similar-papers-list li:last-child {
+  border-bottom: none;
+}
+
+.similar-paper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+.paper-title {
+  font-size: var(--text-sm);
+  color: var(--color-text-primary);
+  flex: 1;
+}
+
+.similarity-score {
+  font-size: var(--text-xs);
+  color: var(--color-primary);
+  font-weight: var(--font-semibold);
+  white-space: nowrap;
+}
+
+.paper-year {
+  font-size: var(--text-xs);
+  color: var(--color-text-tertiary);
+  display: block;
+  margin-top: var(--space-1);
+}
+
+/* Dark Mode */
+[data-theme="dark"] .ai-action-button {
+  background: var(--color-primary);
+}
+
+[data-theme="dark"] .ai-action-button:hover:not(:disabled) {
+  background: var(--color-primary-light);
+}

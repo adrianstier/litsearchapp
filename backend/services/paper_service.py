@@ -21,54 +21,63 @@ def save_paper(db: Session, paper: PaperModel) -> db_models.Paper:
     Returns:
         Database paper model
     """
-    # Check if paper already exists
-    existing = None
-    if paper.doi:
-        existing = db.query(db_models.Paper).filter(db_models.Paper.doi == paper.doi).first()
-    elif paper.pmid:
-        existing = db.query(db_models.Paper).filter(db_models.Paper.pmid == paper.pmid).first()
-    elif paper.arxiv_id:
-        existing = db.query(db_models.Paper).filter(db_models.Paper.arxiv_id == paper.arxiv_id).first()
+    try:
+        # Check if paper already exists
+        existing = None
+        if paper.doi:
+            existing = db.query(db_models.Paper).filter(db_models.Paper.doi == paper.doi).first()
+        if not existing and paper.pmid:
+            existing = db.query(db_models.Paper).filter(db_models.Paper.pmid == paper.pmid).first()
+        if not existing and paper.arxiv_id:
+            existing = db.query(db_models.Paper).filter(db_models.Paper.arxiv_id == paper.arxiv_id).first()
 
-    if existing:
-        # Update existing paper
-        update_paper(db, existing, paper)
-        return existing
+        if existing:
+            # Update existing paper
+            update_paper(db, existing, paper)
+            return existing
 
-    # Create new paper
-    db_paper = db_models.Paper(
-        title=paper.title,
-        doi=paper.doi,
-        pmid=paper.pmid,
-        pmcid=paper.pmcid,
-        arxiv_id=paper.arxiv_id,
-        abstract=paper.abstract,
-        keywords=json.dumps(paper.keywords),
-        year=paper.year,
-        journal=paper.journal,
-        volume=paper.volume,
-        issue=paper.issue,
-        pages=paper.pages,
-        citations=paper.citations,
-        altmetric_score=paper.altmetric_score,
-        relevance_score=paper.relevance_score,
-        url=str(paper.url) if paper.url else None,
-        pdf_url=str(paper.pdf_url) if paper.pdf_url else None,
-        local_pdf_path=paper.local_pdf_path,
-        paper_type=paper.paper_type.value if paper.paper_type else None,
-        sources=json.dumps([s.value for s in paper.sources])
-    )
+        # Create new paper
+        db_paper = db_models.Paper(
+            title=paper.title,
+            doi=paper.doi,
+            pmid=paper.pmid,
+            pmcid=paper.pmcid,
+            arxiv_id=paper.arxiv_id,
+            abstract=paper.abstract,
+            keywords=json.dumps(paper.keywords),
+            year=paper.year,
+            journal=paper.journal,
+            volume=paper.volume,
+            issue=paper.issue,
+            pages=paper.pages,
+            citations=paper.citations,
+            altmetric_score=paper.altmetric_score,
+            relevance_score=paper.relevance_score,
+            url=str(paper.url) if paper.url else None,
+            pdf_url=str(paper.pdf_url) if paper.pdf_url else None,
+            local_pdf_path=paper.local_pdf_path,
+            paper_type=paper.paper_type.value if paper.paper_type else None,
+            sources=json.dumps([s.value for s in paper.sources])
+        )
 
-    # Add authors
-    for author in paper.authors:
-        db_author = get_or_create_author(db, author)
-        db_paper.authors.append(db_author)
+        # Add authors (avoid duplicates by checking IDs)
+        existing_author_ids = set()
+        for author in paper.authors:
+            db_author = get_or_create_author(db, author)
+            if db_author.id not in existing_author_ids:
+                db_paper.authors.append(db_author)
+                existing_author_ids.add(db_author.id)
 
-    db.add(db_paper)
-    db.commit()
-    db.refresh(db_paper)
+        db.add(db_paper)
+        db.commit()
+        db.refresh(db_paper)
 
-    return db_paper
+        return db_paper
+
+    except Exception as e:
+        db.rollback()
+        print(f"Error saving paper '{paper.title[:50]}...': {e}")
+        raise
 
 
 def update_paper(db: Session, db_paper: db_models.Paper, paper: PaperModel):

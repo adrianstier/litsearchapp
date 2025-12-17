@@ -28,7 +28,16 @@ app = FastAPI(
 # CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://localhost:3000"],  # Vite and React dev servers
+    allow_origins=[
+        "http://localhost:5173",
+        "http://localhost:5174",
+        "http://localhost:5175",
+        "http://localhost:3000",
+        "http://127.0.0.1:5173",
+        "http://127.0.0.1:5174",
+        "http://127.0.0.1:5175",
+        "http://127.0.0.1:3000",
+    ],  # Vite and React dev servers
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -156,6 +165,18 @@ async def list_papers(
     }
 
 
+# NOTE: This route MUST be before /api/papers/{paper_id} to avoid "search" being treated as paper_id
+@app.get("/api/papers/search")
+async def full_text_search(
+    q: str = Query(..., min_length=1),
+    limit: int = Query(50, ge=1, le=200),
+    db: Session = Depends(get_db_session)
+):
+    """Full-text search across papers and PDFs"""
+    results = paper_service.full_text_search(db, q, limit)
+    return {"results": [paper_service.paper_to_schema(p) for p in results]}
+
+
 @app.get("/api/papers/{paper_id}", response_model=schemas.Paper)
 async def get_paper(paper_id: int, db: Session = Depends(get_db_session)):
     """Get paper details"""
@@ -223,17 +244,6 @@ async def extract_pdf_text(paper_id: int, db: Session = Depends(get_db_session))
     db.commit()
 
     return {"message": "Text extracted", "page_count": page_count, "text_length": len(text)}
-
-
-@app.get("/api/papers/search")
-async def full_text_search(
-    q: str = Query(..., min_length=1),
-    limit: int = Query(50, ge=1, le=200),
-    db: Session = Depends(get_db_session)
-):
-    """Full-text search across papers and PDFs"""
-    results = paper_service.full_text_search(db, q, limit)
-    return {"results": [paper_service.paper_to_schema(p) for p in results]}
 
 
 # =============================================================================
@@ -424,6 +434,618 @@ async def clear_auth():
     ucsb_auth = UCSBAuth()
     ucsb_auth.clear_session()
     return {"message": "Authentication cleared"}
+
+
+# =============================================================================
+# RESEARCH RABBIT-STYLE DISCOVERY ENDPOINTS
+# =============================================================================
+
+@app.get("/api/papers/{paper_id}/recommendations")
+async def get_paper_recommendations(
+    paper_id: int,
+    limit: int = Query(10, ge=1, le=50),
+    db: Session = Depends(get_db_session)
+):
+    """Get AI-powered paper recommendations (ResearchRabbit-style)"""
+    # Get the paper from database
+    paper = db.query(db_models.Paper).filter(db_models.Paper.id == paper_id).first()
+    if not paper:
+        raise HTTPException(status_code=404, detail="Paper not found")
+
+    try:
+        # Try Semantic Scholar first (best recommendations)
+        from src.search.semantic_scholar import SemanticScholarProvider
+        s2_provider = SemanticScholarProvider()
+
+        # Use paper DOI or title to get S2 ID
+        s2_id = None
+        if paper.doi:
+            s2_paper = s2_provider.get_paper_by_id(f"DOI:{paper.doi}")
+            if s2_paper:
+                # Extract S2 ID from URL
+                import re
+                if s2_paper.url:
+                    match = re.search(r'/paper/([a-f0-9]+)', str(s2_paper.url))
+                    if match:
+                        s2_id = match.group(1)
+
+        recommendations = []
+        if s2_id:
+            recommendations = s2_provider.get_recommendations(s2_id, limit=limit)
+
+        # Save recommendations to database
+        saved_recs = []
+        for rec_paper in recommendations:
+            db_paper = paper_service.save_paper(db, rec_paper)
+            saved_recs.append(db_paper)
+
+        return {
+            "paper_id": paper_id,
+            "recommendations": [paper_service.paper_to_schema(p) for p in saved_recs],
+            "total": len(saved_recs),
+            "source": "semantic_scholar"
+        }
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/papers/{paper_id}/citations")
+async def get_paper_citations(
+    paper_id: int,
+    limit: int = Query(50, ge=1, le=200),
+    db: Session = Depends(get_db_session)
+):
+    """Get papers that cite this paper (forward citations)"""
+    paper = db.query(db_models.Paper).filter(db_models.Paper.id == paper_id).first()
+    if not paper:
+        raise HTTPException(status_code=404, detail="Paper not found")
+
+    try:
+        # Try OpenAlex for citation network
+        from src.search.openalex import OpenAlexProvider
+        openalex = OpenAlexProvider()
+
+        citing_papers = []
+        if paper.doi:
+            citing_papers = openalex.get_citations(f"https://doi.org/{paper.doi}", limit=limit)
+
+        # Save citing papers
+        saved_citations = []
+        for citing_paper in citing_papers:
+            db_paper = paper_service.save_paper(db, citing_paper)
+            saved_citations.append(db_paper)
+
+        return {
+            "paper_id": paper_id,
+            "citations": [paper_service.paper_to_schema(p) for p in saved_citations],
+            "total": len(saved_citations),
+            "source": "openalex"
+        }
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/papers/{paper_id}/references")
+async def get_paper_references(
+    paper_id: int,
+    limit: int = Query(50, ge=1, le=200),
+    db: Session = Depends(get_db_session)
+):
+    """Get papers cited by this paper (backward citations)"""
+    paper = db.query(db_models.Paper).filter(db_models.Paper.id == paper_id).first()
+    if not paper:
+        raise HTTPException(status_code=404, detail="Paper not found")
+
+    try:
+        # Try OpenAlex for references
+        from src.search.openalex import OpenAlexProvider
+        openalex = OpenAlexProvider()
+
+        references = []
+        if paper.doi:
+            references = openalex.get_references(f"https://doi.org/{paper.doi}", limit=limit)
+
+        # Save references
+        saved_refs = []
+        for ref_paper in references:
+            db_paper = paper_service.save_paper(db, ref_paper)
+            saved_refs.append(db_paper)
+
+        return {
+            "paper_id": paper_id,
+            "references": [paper_service.paper_to_schema(p) for p in saved_refs],
+            "total": len(saved_refs),
+            "source": "openalex"
+        }
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/papers/{paper_id}/related")
+async def get_related_papers(
+    paper_id: int,
+    limit: int = Query(10, ge=1, le=50),
+    db: Session = Depends(get_db_session)
+):
+    """Get papers related by topic/concept similarity"""
+    paper = db.query(db_models.Paper).filter(db_models.Paper.id == paper_id).first()
+    if not paper:
+        raise HTTPException(status_code=404, detail="Paper not found")
+
+    try:
+        # Use OpenAlex concept-based similarity
+        from src.search.openalex import OpenAlexProvider
+        openalex = OpenAlexProvider()
+
+        related_papers = []
+        if paper.doi:
+            openalex_id = f"https://doi.org/{paper.doi}"
+            related_papers = openalex.get_related_papers(openalex_id, limit=limit)
+
+        # Save related papers
+        saved_related = []
+        for rel_paper in related_papers:
+            db_paper = paper_service.save_paper(db, rel_paper)
+            saved_related.append(db_paper)
+
+        return {
+            "paper_id": paper_id,
+            "related_papers": [paper_service.paper_to_schema(p) for p in saved_related],
+            "total": len(saved_related),
+            "source": "openalex"
+        }
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/papers/{paper_id}/network")
+async def get_citation_network(
+    paper_id: int,
+    depth: int = Query(1, ge=1, le=2),
+    db: Session = Depends(get_db_session)
+):
+    """Get citation network for visualization (ResearchRabbit-style)"""
+    paper = db.query(db_models.Paper).filter(db_models.Paper.id == paper_id).first()
+    if not paper:
+        raise HTTPException(status_code=404, detail="Paper not found")
+
+    try:
+        from src.search.openalex import OpenAlexProvider
+        openalex = OpenAlexProvider()
+
+        # Build network
+        network = {
+            "seed": {
+                "id": paper.id,
+                "title": paper.title,
+                "year": paper.year,
+                "citations": paper.citations
+            },
+            "citations": [],  # Papers citing this one
+            "references": [],  # Papers cited by this one
+            "nodes": [],
+            "edges": []
+        }
+
+        if paper.doi:
+            openalex_id = f"https://doi.org/{paper.doi}"
+
+            # Get forward citations (papers citing this)
+            citing = openalex.get_citations(openalex_id, limit=20)
+            for citing_paper in citing[:10]:  # Limit for visualization
+                db_paper = paper_service.save_paper(db, citing_paper)
+                network["citations"].append({
+                    "id": db_paper.id,
+                    "title": db_paper.title,
+                    "year": db_paper.year,
+                    "citations": db_paper.citations
+                })
+
+            # Get backward citations (papers cited by this)
+            refs = openalex.get_references(openalex_id, limit=20)
+            for ref_paper in refs[:10]:  # Limit for visualization
+                db_paper = paper_service.save_paper(db, ref_paper)
+                network["references"].append({
+                    "id": db_paper.id,
+                    "title": db_paper.title,
+                    "year": db_paper.year,
+                    "citations": db_paper.citations
+                })
+
+        # Build nodes and edges for graph visualization
+        network["nodes"].append({"id": paper.id, "label": paper.title[:50] + "...", "type": "seed"})
+
+        for citing in network["citations"]:
+            network["nodes"].append({"id": citing["id"], "label": citing["title"][:50] + "...", "type": "citing"})
+            network["edges"].append({"from": citing["id"], "to": paper.id, "label": "cites"})
+
+        for ref in network["references"]:
+            network["nodes"].append({"id": ref["id"], "label": ref["title"][:50] + "...", "type": "reference"})
+            network["edges"].append({"from": paper.id, "to": ref["id"], "label": "cites"})
+
+        return network
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+# =============================================================================
+# AI-POWERED FEATURES
+# =============================================================================
+
+@app.post("/api/ai/summarize")
+async def summarize_papers(
+    paper_ids: List[int],
+    db: Session = Depends(get_db_session)
+):
+    """Generate AI summaries for papers"""
+    try:
+        from src.services.llm_service import get_llm_service
+        import asyncio
+
+        llm = get_llm_service()
+
+        # Get papers from database
+        papers = db.query(db_models.Paper).filter(db_models.Paper.id.in_(paper_ids)).all()
+
+        if not papers:
+            return {"summaries": []}
+
+        # Generate summaries
+        paper_dicts = [{"title": p.title, "abstract": p.abstract} for p in papers]
+        summaries = await llm.summarize_papers_batch(paper_dicts)
+
+        return {
+            "summaries": [
+                {"paper_id": paper.id, "summary": summary}
+                for paper, summary in zip(papers, summaries)
+            ]
+        }
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/api/ai/extract")
+async def extract_data(
+    paper_id: int = Query(...),
+    fields: List[str] = Query(...),
+    db: Session = Depends(get_db_session)
+):
+    """Extract structured data from a paper"""
+    try:
+        from src.services.llm_service import get_llm_service
+
+        llm = get_llm_service()
+
+        # Get paper
+        paper = db.query(db_models.Paper).filter(db_models.Paper.id == paper_id).first()
+        if not paper:
+            raise HTTPException(status_code=404, detail="Paper not found")
+
+        # Use abstract or PDF content
+        text = paper.pdf_content or paper.abstract or ""
+        if not text:
+            raise HTTPException(status_code=400, detail="No text available for extraction")
+
+        # Extract data
+        extracted = llm.extract_structured_data(text, fields)
+
+        return {
+            "paper_id": paper_id,
+            "extracted": extracted
+        }
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/api/ai/custom-column")
+async def extract_custom_column(
+    paper_ids: List[int],
+    column_name: str,
+    column_description: str,
+    db: Session = Depends(get_db_session)
+):
+    """Extract custom column data from multiple papers"""
+    try:
+        from src.services.llm_service import get_llm_service
+
+        llm = get_llm_service()
+
+        # Get papers
+        papers = db.query(db_models.Paper).filter(db_models.Paper.id.in_(paper_ids)).all()
+        if not papers:
+            return {"results": []}
+
+        # Extract column data
+        paper_dicts = [{"title": p.title, "abstract": p.abstract} for p in papers]
+        values = llm.extract_custom_column(paper_dicts, column_name, column_description)
+
+        return {
+            "column_name": column_name,
+            "results": [
+                {"paper_id": paper.id, "value": value}
+                for paper, value in zip(papers, values)
+            ]
+        }
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/api/ai/compare")
+async def compare_papers(
+    paper_ids: List[int],
+    aspect: str = "findings",
+    db: Session = Depends(get_db_session)
+):
+    """Compare multiple papers on a specific aspect"""
+    try:
+        from src.services.llm_service import get_llm_service
+
+        llm = get_llm_service()
+
+        # Get papers
+        papers = db.query(db_models.Paper).filter(db_models.Paper.id.in_(paper_ids)).all()
+        if not papers:
+            raise HTTPException(status_code=404, detail="No papers found")
+
+        # Compare papers
+        paper_dicts = [{"title": p.title, "abstract": p.abstract} for p in papers]
+        comparison = llm.compare_papers(paper_dicts, aspect)
+
+        return {
+            "aspect": aspect,
+            "comparison": comparison,
+            "paper_count": len(papers)
+        }
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+# =============================================================================
+# SEMANTIC SEARCH
+# =============================================================================
+
+@app.post("/api/search/semantic")
+async def semantic_search(
+    query: str,
+    paper_ids: Optional[List[int]] = None,
+    top_k: int = 20,
+    db: Session = Depends(get_db_session)
+):
+    """Perform semantic search/reranking on papers"""
+    try:
+        from src.services.semantic_search import get_semantic_service
+
+        semantic = get_semantic_service()
+
+        # Get papers to search
+        if paper_ids:
+            papers = db.query(db_models.Paper).filter(db_models.Paper.id.in_(paper_ids)).all()
+        else:
+            # Search all papers
+            papers = db.query(db_models.Paper).limit(500).all()
+
+        if not papers:
+            return {"results": []}
+
+        # Convert to dicts
+        paper_dicts = [
+            {
+                "id": p.id,
+                "title": p.title,
+                "abstract": p.abstract,
+                "year": p.year,
+                "citations": p.citations
+            }
+            for p in papers
+        ]
+
+        # Semantic rerank
+        results = semantic.rerank_papers(query, paper_dicts, top_k=top_k)
+
+        return {
+            "results": [
+                {
+                    "paper_id": paper["id"],
+                    "title": paper["title"],
+                    "year": paper["year"],
+                    "citations": paper["citations"],
+                    "similarity_score": float(score)
+                }
+                for paper, score in results
+            ]
+        }
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/papers/{paper_id}/similar")
+async def find_similar_papers(
+    paper_id: int,
+    top_k: int = 5,
+    db: Session = Depends(get_db_session)
+):
+    """Find papers similar to a given paper"""
+    try:
+        from src.services.semantic_search import get_semantic_service
+
+        semantic = get_semantic_service()
+
+        # Get target paper
+        paper = db.query(db_models.Paper).filter(db_models.Paper.id == paper_id).first()
+        if not paper:
+            raise HTTPException(status_code=404, detail="Paper not found")
+
+        # Get all other papers
+        all_papers = db.query(db_models.Paper).filter(db_models.Paper.id != paper_id).limit(500).all()
+
+        # Convert to dicts
+        paper_dict = {
+            "id": paper.id,
+            "title": paper.title,
+            "abstract": paper.abstract
+        }
+        all_dicts = [
+            {
+                "id": p.id,
+                "title": p.title,
+                "abstract": p.abstract,
+                "year": p.year,
+                "citations": p.citations
+            }
+            for p in all_papers
+        ]
+
+        # Find similar
+        results = semantic.find_similar_papers(paper_dict, all_dicts, top_k=top_k)
+
+        return {
+            "paper_id": paper_id,
+            "similar": [
+                {
+                    "paper_id": p["id"],
+                    "title": p["title"],
+                    "year": p["year"],
+                    "similarity_score": float(score)
+                }
+                for p, score in results
+            ]
+        }
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+# =============================================================================
+# CITATION NETWORK
+# =============================================================================
+
+@app.get("/api/network/d3/{paper_id}")
+async def get_d3_network(
+    paper_id: int,
+    db: Session = Depends(get_db_session)
+):
+    """Get citation network in D3.js format"""
+    try:
+        from src.search.openalex import OpenAlexProvider
+        openalex = OpenAlexProvider()
+
+        # Get paper
+        paper = db.query(db_models.Paper).filter(db_models.Paper.id == paper_id).first()
+        if not paper:
+            raise HTTPException(status_code=404, detail="Paper not found")
+
+        # Build D3 format nodes and links
+        nodes = [{"id": str(paper_id), "title": paper.title, "type": "seed", "citations": paper.citations or 0}]
+        links = []
+
+        # Get citations and references from OpenAlex if paper has DOI
+        if paper.doi:
+            openalex_id = f"https://doi.org/{paper.doi}"
+
+            # Get forward citations (papers citing this)
+            try:
+                citing_papers = openalex.get_citations(openalex_id, limit=10)
+                for citing_paper in citing_papers:
+                    db_paper = paper_service.save_paper(db, citing_paper)
+                    nodes.append({
+                        "id": str(db_paper.id),
+                        "title": db_paper.title,
+                        "type": "citing",
+                        "citations": db_paper.citations or 0
+                    })
+                    links.append({"source": str(db_paper.id), "target": str(paper_id)})
+            except Exception as e:
+                print(f"Failed to get citations: {e}")
+
+            # Get backward citations (papers cited by this)
+            try:
+                ref_papers = openalex.get_references(openalex_id, limit=10)
+                for ref_paper in ref_papers:
+                    db_paper = paper_service.save_paper(db, ref_paper)
+                    nodes.append({
+                        "id": str(db_paper.id),
+                        "title": db_paper.title,
+                        "type": "reference",
+                        "citations": db_paper.citations or 0
+                    })
+                    links.append({"source": str(paper_id), "target": str(db_paper.id)})
+            except Exception as e:
+                print(f"Failed to get references: {e}")
+
+        return {
+            "nodes": nodes,
+            "links": links,
+            "stats": {
+                "total_nodes": len(nodes),
+                "total_links": len(links)
+            }
+        }
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+# =============================================================================
+# PDF EXTRACTION
+# =============================================================================
+
+@app.post("/api/papers/{paper_id}/extract-text")
+async def extract_paper_text(
+    paper_id: int,
+    db: Session = Depends(get_db_session)
+):
+    """Extract text from paper's PDF"""
+    try:
+        from src.services.pdf_extraction import get_pdf_service
+
+        pdf_svc = get_pdf_service()
+
+        # Get paper
+        paper = db.query(db_models.Paper).filter(db_models.Paper.id == paper_id).first()
+        if not paper:
+            raise HTTPException(status_code=404, detail="Paper not found")
+
+        if not paper.local_pdf_path:
+            raise HTTPException(status_code=400, detail="Paper has no PDF")
+
+        # Extract text
+        result = pdf_svc.extract_from_file(paper.local_pdf_path)
+
+        # Save to database
+        paper.pdf_content = result["text"]
+        db.commit()
+
+        # Extract sections
+        sections = pdf_svc.extract_sections(result["text"])
+
+        return {
+            "paper_id": paper_id,
+            "text_length": len(result["text"]),
+            "pages": result.get("pages", 0),
+            "method": result.get("method", "unknown"),
+            "sections": list(sections.keys())
+        }
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 # =============================================================================

@@ -96,7 +96,7 @@ def get_citation_network(db: Session, collection_id: Optional[int] = None) -> sc
         nodes.append(schemas.NetworkNode(
             id=node_id,
             label=paper.title[:50] + "..." if len(paper.title) > 50 else paper.title,
-            size=min(paper.citations / 10 + 5, 30),  # Scale by citations
+            size=int(min(paper.citations / 10 + 5, 30)),  # Scale by citations
             group=str(decade)
         ))
 
