@@ -1,0 +1,52 @@
+# Backend Dockerfile for Literature Search Application
+FROM python:3.11-slim
+
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1
+
+# Set working directory
+WORKDIR /app
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy requirements first (for better caching)
+COPY pyproject.toml .
+COPY README.md .
+
+# Install Python dependencies
+RUN pip install --upgrade pip setuptools wheel && \
+    pip install -e ".[dev,ai]"
+
+# Install additional backend dependencies
+RUN pip install fastapi uvicorn sqlalchemy python-multipart
+
+# Copy application code
+COPY src/ ./src/
+COPY backend/ ./backend/
+
+# Create necessary directories
+RUN mkdir -p /app/database /app/papers /app/cache /app/output /app/logs
+
+# Set environment variables for the app
+ENV DATABASE_URL=sqlite:////app/database/papers.db \
+    PAPERS_DIR=/app/papers \
+    CACHE_DIR=/app/cache \
+    OUTPUT_DIR=/app/output \
+    LOG_LEVEL=INFO
+
+# Expose port
+EXPOSE 8000
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost:8000/api/health || exit 1
+
+# Run the application
+CMD ["uvicorn", "backend.main:app", "--host", "0.0.0.0", "--port", "8000"]

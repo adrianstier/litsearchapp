@@ -1,0 +1,67 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    container_name: litsearch-backend
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./database:/app/database
+      - ./papers:/app/papers
+      - ./cache:/app/cache
+      - ./logs:/app/logs
+    environment:
+      - DATABASE_URL=sqlite:////app/database/papers.db
+      - PAPERS_DIR=/app/papers
+      - CACHE_DIR=/app/cache
+      - OUTPUT_DIR=/app/output
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+      - DEBUG=${DEBUG:-false}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - SERPAPI_KEY=${SERPAPI_KEY:-}
+      - CROSSREF_MAILTO=${CROSSREF_MAILTO:-litsearch@example.com}
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    networks:
+      - litsearch-network
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+      args:
+        - VITE_API_URL=http://localhost:8000
+    container_name: litsearch-frontend
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:80/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
+    networks:
+      - litsearch-network
+
+networks:
+  litsearch-network:
+    driver: bridge
+
+volumes:
+  database:
+  papers:
+  cache:
+  logs:

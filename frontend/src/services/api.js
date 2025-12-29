@@ -4,14 +4,105 @@
 
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:8000/api';
+// Use environment variable or fallback to localhost
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },
+  timeout: 60000, // 60 second timeout for long searches
 });
+
+// Request interceptor for logging and request handling
+api.interceptors.request.use(
+  (config) => {
+    // Add timestamp for request tracking
+    config.metadata = { startTime: new Date() };
+    return config;
+  },
+  (error) => {
+    console.error('Request error:', error);
+    return Promise.reject(error);
+  }
+);
+
+// Response interceptor for error handling
+api.interceptors.response.use(
+  (response) => {
+    // Log response time in development
+    if (import.meta.env.DEV && response.config.metadata) {
+      const duration = new Date() - response.config.metadata.startTime;
+      console.debug(`API ${response.config.method?.toUpperCase()} ${response.config.url}: ${duration}ms`);
+    }
+    return response;
+  },
+  (error) => {
+    // Handle different error types
+    const errorResponse = {
+      message: 'An unexpected error occurred',
+      status: null,
+      data: null,
+    };
+
+    if (error.response) {
+      // Server responded with error status
+      errorResponse.status = error.response.status;
+      errorResponse.data = error.response.data;
+
+      switch (error.response.status) {
+        case 400:
+          errorResponse.message = error.response.data?.detail || 'Invalid request';
+          break;
+        case 401:
+          errorResponse.message = 'Authentication required';
+          break;
+        case 403:
+          errorResponse.message = 'Access denied';
+          break;
+        case 404:
+          errorResponse.message = error.response.data?.detail || 'Resource not found';
+          break;
+        case 422:
+          errorResponse.message = error.response.data?.detail || 'Validation error';
+          break;
+        case 429:
+          errorResponse.message = 'Too many requests. Please slow down.';
+          break;
+        case 500:
+          errorResponse.message = error.response.data?.detail || 'Server error. Please try again later.';
+          break;
+        case 502:
+        case 503:
+        case 504:
+          errorResponse.message = 'Service temporarily unavailable. Please try again later.';
+          break;
+        default:
+          errorResponse.message = error.response.data?.detail || `Error: ${error.response.status}`;
+      }
+    } else if (error.request) {
+      // Request was made but no response received
+      if (error.code === 'ECONNABORTED') {
+        errorResponse.message = 'Request timed out. Please try again.';
+      } else {
+        errorResponse.message = 'Unable to connect to server. Please check your connection.';
+      }
+    } else {
+      // Error in request configuration
+      errorResponse.message = error.message || 'Request configuration error';
+    }
+
+    // Log error in development
+    if (import.meta.env.DEV) {
+      console.error('API Error:', errorResponse);
+    }
+
+    // Attach our custom error response to the error object
+    error.errorResponse = errorResponse;
+    return Promise.reject(error);
+  }
+);
 
 // Search API
 export const searchAPI = {

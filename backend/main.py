@@ -14,9 +14,14 @@ from src.models import SearchQuery as SearchQueryModel, Source
 from src.search.orchestrator import SearchOrchestrator
 from src.retrieval.pdf_retriever import PDFRetriever
 from src.auth.ucsb_auth import UCSBAuth
+from src.utils.logging_config import get_logger
+from src.utils.cache import get_cache
 
 from . import schemas
 from .services import paper_service, pdf_service, visualization_service
+
+# Initialize logger
+logger = get_logger("api")
 
 # Initialize FastAPI
 app = FastAPI(
@@ -47,7 +52,7 @@ app.add_middleware(
 @app.on_event("startup")
 async def startup_event():
     init_db()
-    print("✓ FastAPI server started")
+    logger.info("FastAPI server started successfully")
 
 
 # =============================================================================
@@ -969,7 +974,7 @@ async def get_d3_network(
                     })
                     links.append({"source": str(db_paper.id), "target": str(paper_id)})
             except Exception as e:
-                print(f"Failed to get citations: {e}")
+                logger.warning(f"Failed to get citations: {e}")
 
             # Get backward citations (papers cited by this)
             try:
@@ -984,7 +989,7 @@ async def get_d3_network(
                     })
                     links.append({"source": str(paper_id), "target": str(db_paper.id)})
             except Exception as e:
-                print(f"Failed to get references: {e}")
+                logger.warning(f"Failed to get references: {e}")
 
         return {
             "nodes": nodes,
@@ -1049,6 +1054,20 @@ async def extract_paper_text(
 
 
 # =============================================================================
+# HEALTH CHECK ENDPOINT
+# =============================================================================
+
+@app.get("/api/health")
+async def health_check():
+    """Health check endpoint for container orchestration"""
+    return {
+        "status": "healthy",
+        "service": "litsearch-api",
+        "version": "1.0.0"
+    }
+
+
+# =============================================================================
 # STATS ENDPOINT
 # =============================================================================
 
@@ -1067,6 +1086,26 @@ async def get_stats(db: Session = Depends(get_db_session)):
         "total_searches": total_searches,
         "pdf_percentage": (total_pdfs / total_papers * 100) if total_papers > 0 else 0
     }
+
+
+# =============================================================================
+# CACHE ENDPOINTS
+# =============================================================================
+
+@app.get("/api/cache/stats")
+async def get_cache_stats():
+    """Get cache statistics"""
+    cache = get_cache()
+    return cache.stats()
+
+
+@app.delete("/api/cache/clear")
+async def clear_cache():
+    """Clear all cached data"""
+    cache = get_cache()
+    cache.clear()
+    logger.info("Cache cleared via API")
+    return {"message": "Cache cleared successfully"}
 
 
 if __name__ == "__main__":

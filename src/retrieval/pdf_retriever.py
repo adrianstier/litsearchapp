@@ -8,6 +8,9 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from src.models import Paper
 from src.utils.config import Config
 from src.utils.rate_limiter import RateLimiter
+from src.utils.logging_config import get_logger
+
+logger = get_logger("retrieval.pdf")
 
 
 class PDFRetriever:
@@ -70,9 +73,10 @@ class PDFRetriever:
                 success = strategy_func(paper, filepath)
                 if success:
                     paper.local_pdf_path = str(filepath)
-                    print(f"  ✓ Downloaded via {strategy_name}: {paper.title[:50]}...")
+                    logger.info(f"Downloaded via {strategy_name}: {paper.title[:50]}...")
                     return True, str(filepath)
             except Exception as e:
+                logger.debug(f"{strategy_name} failed for {paper.title[:30]}: {e}")
                 continue
 
         error_msg = f"All download strategies failed for: {paper.title}"
@@ -95,7 +99,7 @@ class PDFRetriever:
             'total': len(papers)
         }
 
-        print(f"\nDownloading {len(papers)} papers...")
+        logger.info(f"Downloading {len(papers)} papers...")
 
         with ThreadPoolExecutor(max_workers=max_concurrent) as executor:
             future_to_paper = {
@@ -125,8 +129,8 @@ class PDFRetriever:
 
                 # Progress update
                 completed = len(results['successful']) + len(results['failed'])
-                print(f"Progress: {completed}/{results['total']} "
-                      f"({len(results['successful'])} successful)")
+                logger.debug(f"Progress: {completed}/{results['total']} "
+                             f"({len(results['successful'])} successful)")
 
         return results
 

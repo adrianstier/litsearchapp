@@ -14,6 +14,9 @@ from src.search.semantic_scholar import SemanticScholarProvider
 from src.search.openalex import OpenAlexProvider
 from src.search.deduplicator import Deduplicator
 from src.utils.config import Config
+from src.utils.logging_config import get_logger
+
+logger = get_logger("search.orchestrator")
 
 
 class SearchOrchestrator:
@@ -66,11 +69,11 @@ class SearchOrchestrator:
                 try:
                     papers = future.result()
                     results_by_source[source] = papers
-                    print(f"✓ {source.value}: {len(papers)} papers found")
+                    logger.info(f"{source.value}: {len(papers)} papers found")
                 except Exception as e:
                     error_msg = str(e)
                     errors[source.value] = error_msg
-                    print(f"✗ {source.value}: {error_msg}")
+                    logger.warning(f"{source.value}: {error_msg}")
                     results_by_source[source] = []
 
         # Deduplicate and merge results

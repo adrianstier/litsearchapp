@@ -14,6 +14,7 @@ import { statsAPI, authAPI } from './services/api';
 import { ThemeProvider, useTheme } from './context/ThemeContext';
 import { ToastProvider } from './components/Toast';
 import { KeyboardShortcutsHelp } from './components/KeyboardShortcutsHelp';
+import ErrorBoundary from './components/ErrorBoundary';
 import './App.css';
 import './professional-enhancements.css';
 
@@ -191,13 +192,15 @@ function AppContent() {
 
 function App() {
   return (
-    <ThemeProvider>
-      <ToastProvider>
-        <Router>
-          <AppContent />
-        </Router>
-      </ToastProvider>
-    </ThemeProvider>
+    <ErrorBoundary fallbackMessage="The application encountered an error. Please refresh the page or try again.">
+      <ThemeProvider>
+        <ToastProvider>
+          <Router>
+            <AppContent />
+          </Router>
+        </ToastProvider>
+      </ThemeProvider>
+    </ErrorBoundary>
   );
 }
 
